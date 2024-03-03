@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#teacherTable').DataTable({
         "ajax": {
-            "url": "https://localhost:44334/api/admins/all-teachers-with-fans",
+            "url": "https://localhost:7177/api/admins/all-teachers-with-fans",
             "dataSrc": ""
         },
         "columns": [
