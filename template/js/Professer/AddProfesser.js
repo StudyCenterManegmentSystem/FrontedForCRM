@@ -33,7 +33,7 @@ async function addProfesser() {
             document.getElementById('errorDisplay').innerText = '';
 
             setTimeout(() => {
-                window.location.href = './login.html';
+                window.location.href = './all-professors.html';
             }, 2000);
 
         } else if (response.status == 400 || response.status == 500) {
@@ -47,7 +47,8 @@ async function addProfesser() {
             document.getElementById('errorDisplay').innerText = `Xatolik: ${resultDiv}`;
         }
 
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
     }
 }

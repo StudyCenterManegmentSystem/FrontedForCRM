@@ -1,14 +1,13 @@
 $(document).ready(function() {
     $('#teacherTable').DataTable({
         "ajax": {
-            "url": "https://localhost:44334/api/admins/all-teachers-with-fans",
+            "url": "https://localhost:44334/api/fans/get-all-fans",
             "dataSrc": ""
         },
         "columns": [
-            { "data": "teacherId" },
-            { "data": "firstName" },
-            { "data": "lastName" },
-            { "data": "email" },
+            { "data": "id" },
+            { "data": "fanName" },
+            { "data": "fanDescription" },
             {   
                 "data": null,
                 "render": function(data, type, row) {
