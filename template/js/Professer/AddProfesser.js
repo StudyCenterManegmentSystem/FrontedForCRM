@@ -17,7 +17,7 @@ async function addProfesser() {
     }
 
     try {
-        const response = await fetch('https://localhost:44334/api/admins/register-teacher', {
+        const response = await fetch('https://localhost:7177/api/admins/register-teacher', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -8,7 +8,7 @@ async function deleteProfessor() {
     }
 
     try {
-        const response = await fetch('https://localhost:44334/api/admins/delete-teacher-account', {
+        const response = await fetch('https://localhost:7177/api/admins/delete-teacher-account', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

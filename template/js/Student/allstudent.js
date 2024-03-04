@@ -1,32 +1,61 @@
-// Function to fetch all students from the API
-function getAllStudents() {
-    $.ajax({
-        url: 'https://localhost:7177/api/students/get-all-students',
-        type: 'GET',
-        success: function(response) {
-            // If the request is successful
-            displayStudents(response);
-        },
-        error: function(xhr, status, error) {
-            // If there's an error with the request
-            console.error(error);
-        }
-    });
-}
-
-// Function to display students on the HTML page
-function displayStudents(students) {
-    var studentList = $('#studentList');
-    studentList.empty(); // Clear the existing list
-
-    students.forEach(function(student) {
-        // Create list item for each student
-        var listItem = $('<li>').addClass('list-group-item').text(student.firstName + ' ' + student.lastName);
-        studentList.append(listItem);
-    });
-}
-
-// Fetch all students when the page loads
 $(document).ready(function() {
-    getAllStudents();
+    if ($.fn.DataTable.isDataTable('#example3')) {
+        $('#example3').DataTable().destroy();
+    }
+    $('#example3').DataTable({
+        "ajax": {
+            "url": "https://localhost:7177/api/students/get-all-students",
+            "dataSrc": ""
+        },
+        "columns": [
+            { "data": "id" },
+            { "data": "firstName" },
+            { "data": "lastName" },
+            { "data": "phoneNumber" },
+            {
+                "data": "guruhReturnDtos",
+                "render": function(data, type, row) {
+                    let groups = "";
+                    data.forEach(function(group) {
+                        groups += group.groupName + "<br>";
+                    });
+                    return groups;
+                }
+            },
+            {
+                "data": null,
+                "render": function(data, type, row) {
+                    return `<a href="./edit-students.html" class="btn btn-primary edit-btn" data-id="${row.id}" data-firstname="${row.firstName}" data-lastname="${row.lastName}" data-phonenumber="${row.phoneNumber}">Edit</a> <a href="#" class="btn btn-danger delete-btn" data-id="${row.id}">Delete</a>`;
+                }
+            }
+        ]
+    });
+    $('#example3').on('click', '.edit-btn', function(e) {
+        e.preventDefault(); 
+        var studentId = $(this).data('id');
+        var firstName = $(this).data('firstname');
+        var lastName = $(this).data('lastname');
+        var phoneNumber = $(this).data('phonenumber');
+        
+        $('#editStudentModal #studentId').val(studentId);
+        $('#editStudentModal #firstName').val(firstName);
+        $('#editStudentModal #lastName').val(lastName);
+        $('#editStudentModal #phoneNumber').val(phoneNumber);
+        $('#editStudentModal').modal('show');
+    });
+
+    $('#example3').on('click', '.delete-btn', function(e) {
+        e.preventDefault();
+        var studentId = $(this).data('id');
+        $.ajax({
+            url: `https://localhost:7177/api/students/delete-student/${studentId}`,
+            type: 'DELETE',
+            success: function(response) {
+                $('#example3').DataTable().ajax.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText); 
+            }
+        });
+    });
 });
