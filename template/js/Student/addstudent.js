@@ -1,24 +1,17 @@
+
 async function addStudent() {
-    const firstName = document.getElementById("firstname").value;
-    const lastName = document.getElementById("lastname").value;
-    const phoneNumber = document.getElementById("phoneNumber").value;
-    const groupIdsSelect = document.getElementById("teacherIds");
-    const selectedGroupIds = Array.from(groupIdsSelect.selectedOptions).map(option => option.value);
-    const weekDays = document.getElementById("teacherIds").value;
-    const selectedWeekDays = Array.from(weekDays.selectedOptions).map(option => option.value);
-    const roomid = document.getElementById("roomId").value;
-    const teacher = document.getElementById("teacherIds").value;
+    const firstname = document.getElementById("firstname").value;
+    const lastname = document.getElementById("lastname").value;
+    const phonenumber = document.getElementById("mobilephone").value;
+    const selectestGroupname = Array.from(document.getElementById("groupname").selectedOptions).map(option => option.value);
 
     const studentData = {
-        firstName: firstName,
-        lastName: lastName,
-        phoneNumber: phoneNumber,
-        groupName: selectedGroupIds,
-        weekdays: selectedWeekDays,
-        roomId: roomid,
-        teacherId: teacher
-    };
-
+        firstName: firstname,
+        lastName: lastname,
+        phoneNumber: phonenumber,
+        gruopIds: selectestGroupname
+    }
+    
     try {
         const response = await fetch('https://localhost:7177/api/students/create-student', {
             method: 'POST',
@@ -28,23 +21,34 @@ async function addStudent() {
             body: JSON.stringify(studentData)
         });
 
-        if (response.ok) {
+        if (response.ok === true || response.status === 201 || response.status === 200) {
             const resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = "Student successfully added";
+            resultDiv.innerHTML = "O'quvchi muvaffaqiyatli qo'shildi";
             resultDiv.style.color = 'green';
             resultDiv.style.display = 'block';
 
-            document.getElementById('errorDisplay').innerText = '';
-
             setTimeout(() => {
-                window.location.href = './all-students.html'; // Redirect to all students page
+                window.location.href = './all-students.html';
             }, 2000);
-        } else {
-            const resultDiv = await response.text();
-            console.error(`Error: ${resultDiv}`);
-            document.getElementById('errorDisplay').innerText = `Error: ${resultDiv}`;
+
+            document.getElementById('errorDisplay').innerText = "";
+        } else if (response.status === 400 || response.status === 404 || response.status === 500) {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "O'quvchi qo'shib bo'lmadi. Iltimos, qayta urunib ko'ring.";
+            resultDiv.style.color = 'red';
+            resultDiv.style.display = 'block';
+
         }
-    } catch (error) {
-        console.error(error);
+        
+        else {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "O'quvchi qo'shib bo'lmadi. Iltimos, qayta urunib ko'ring.";
+            resultDiv.style.color = 'red';
+            resultDiv.style.display = 'block';
+
+        }
+    }
+    catch (error) {
+        console.log(error);
     }
 }
