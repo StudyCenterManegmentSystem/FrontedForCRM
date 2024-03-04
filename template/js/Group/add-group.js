@@ -19,7 +19,7 @@ document.getElementById('addGroupForm').addEventListener('submit', function(even
         duration: document.getElementById('duration').value
     };
 
-    var apiUrl = 'https://example.com/api/groups/create-guruh'; // Corrected URL
+    var apiUrl = 'https://localhost:7177/api/groups/create-guruh'; // Corrected URL
     fetch(apiUrl, {
         method: 'POST',
         headers: {
