@@ -7,7 +7,7 @@ async function addCourse() {
     }
 
     try{
-        const response = await fetch('https://localhost:44334/api/fans/create-fan', {
+        const response = await fetch('https://localhost:7117/api/fans/create-fan', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
