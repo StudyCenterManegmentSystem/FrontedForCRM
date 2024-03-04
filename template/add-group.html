@@ -167,13 +167,13 @@
                         </ul>
                     </li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="la la-users"></i>
-                        <span class="nav-text">Group</span>
+                            <i class="la la-users"></i>
+                            <span class="nav-text">Group</span>
                         </a>
                         <ul aria-expanded="false">
-                           <li><a href="all-group.html">All Group</a></li>
-                           <li><a href="add-group.html">Add Group</a></li>
-                           <li><a href="edit-group.html">Edit Group</a></li>
+                            <li><a href="all-group.html">All Group</a></li>
+                            <li><a href="add-group.html">Add Group</a></li>
+                            <li><a href="edit-group.html">Edit Group</a></li>
                         </ul>
                     </li>
                     <li class="nav-label">Extra</li>
@@ -184,127 +184,97 @@
                         <ul aria-expanded="false">
                             <li><a href="page-register.html">Register</a></li>
                             <li><a href="page-login.html">Login</a></li>
-                        </ul>
                     </li>
                 </ul>
             </div>
         </div>
-        <!--**********************************
-            Sidebar end
-        ***********************************-->
 
-
-
-        <!--**********************************
-            Content body start
-        ***********************************-->
         <div class="content-body">
-            <!-- row -->
             <div class="container-fluid">
-
-                <div class="row page-titles mx-0">
-                    <div class="col-sm-6 p-md-0">
-                        <div class="welcome-text">
-                            <h4>Add Course</h4>
+                <h4>Add Group</h4>
+                <form id="addGroupForm">
+                    <div class="form-group">
+                        <label for="groupName">Group Name</label>
+                        <input type="text" class="form-control" id="groupName" placeholder="Enter group name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="roomId">Room ID</label>
+                        <input type="text" class="form-control" id="roomId" placeholder="Enter room ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fanId">Fan ID</label>
+                        <input type="text" class="form-control" id="fanId" placeholder="Enter fan ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacherId">Teacher ID</label>
+                        <input type="text" class="form-control" id="teacherId" placeholder="Enter teacher ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="weekdays">Weekdays</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="weekday-monday" value="Monday">
+                            <label class="form-check-label" for="weekday-monday">Monday</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="weekday-tuesday" value="Tuesday">
+                            <label class="form-check-label" for="weekday-tuesday">Tuesday</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="weekday-tuesday" value="Tuesday">
+                            <label class="form-check-label" for="weekday-tuesday">Wednesday</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="weekday-tuesday" value="Tuesday">
+                            <label class="form-check-label" for="weekday-tuesday">Thuersday</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="weekday-tuesday" value="Tuesday">
+                            <label class="form-check-label" for="weekday-tuesday">Friday</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="weekday-tuesday" value="Tuesday">
+                            <label class="form-check-label" for="weekday-tuesday">Saturday</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="weekday-tuesday" value="Tuesday">
+                            <label class="form-check-label" for="weekday-tuesday">Sunday</label>
                         </div>
                     </div>
-                    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0);">Courses</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0);">Add Course</a></li>
-                        </ol>
+                    <div class="form-group">
+                        <label for="start">Start</label>
+                        <input type="datetime-local" class="form-control" id="start" required>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Courses Details</h4>
-                            </div>
-                            <div class="card-body">
-                                <form action="#" method="post">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label class="form-label">Email</label>
-                                                <input type="email" id="email" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="width: 50%;">
-                                            <label class="form-label">Password</label>
-                                            <input type="password" id="name" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div id="result" style="color: green;"></div>
-                                    <div id="errorDisplay" style="color: red;"></div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                                        <button type="button" onclick="deleteProfessor()"
-                                            class="btn btn-primary">Qo'shish</button>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="end">End</label>
+                        <input type="datetime-local" class="form-control" id="end" required>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="number" class="form-control" id="price" placeholder="Enter price" required>
                     </div>
-                </div>
-
+                    <div class="form-group">
+                        <label for="duration">Duration</label>
+                        <input type="text" class="form-control" id="duration" placeholder="Enter duration" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
 
-
-        <!--**********************************
-            Footer start
-        ***********************************-->
         <div class="footer">
             <div class="copyright">
                 <p>Copyright © Designed &amp; Developed by <a href="../index.htm" target="_blank">DexignLab</a> 2020</p>
             </div>
         </div>
-        <!--**********************************
-            Footer end
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button start
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button end
-        ***********************************-->
-
-
+        <script src="vendor/global/global.min.js"></script>
+        <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+        <script src="js/custom.min.js"></script>
+        <script src="js/dlabnav-init.js"></script>	
+    
+        <script src="vendor/svganimation/vivus.min.js"></script>
+        <script src="vendor/svganimation/svg.animation.js"></script>
+        <script src="js/styleSwitcher.js"></script>
+        <script src="js/Group/add-group.js"></script>
     </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
-
-    <!--**********************************
-        Scripts
-    ***********************************-->
-    <!-- Required vendors -->
-    <script src="vendor/global/global.min.js"></script>
-    <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-    <script src="js/custom.min.js"></script>
-    <script src="js/dlabnav-init.js"></script>
-
-    <!-- Svganimation scripts -->
-    <script src="vendor/svganimation/vivus.min.js"></script>
-    <script src="vendor/svganimation/svg.animation.js"></script>
-    <script src="js/styleSwitcher.js"></script>
-    <script src="js/Professer/delete-professor.js"></script>
-    <!-- pickdate -->
-    <script src="vendor/pickadate/picker.js"></script>
-    <script src="vendor/pickadate/picker.time.js"></script>
-    <script src="vendor/pickadate/picker.date.js"></script>
-
-    <!-- Pickdate -->
-    <script src="js/plugins-init/pickadate-init.js"></script>
-
 </body>
-
-</html>
+</html>   
