@@ -13,16 +13,6 @@ $(document).ready(function() {
             { "data": "lastName" },
             { "data": "phoneNumber" },
             {
-                "data": "guruhReturnDtos",
-                "render": function(data, type, row) {
-                    let groups = "";
-                    data.forEach(function(group) {
-                        groups += group.groupName + "<br>";
-                    });
-                    return groups;
-                }
-            },
-            {
                 "data": null,
                 "render": function(data, type, row) {
                     return `<a href="./edit-students.html" class="btn btn-primary edit-btn" data-id="${row.id}" data-firstname="${row.firstName}" data-lastname="${row.lastName}" data-phonenumber="${row.phoneNumber}">Edit</a> <a href="#" class="btn btn-danger delete-btn" data-id="${row.id}">Delete</a>`;
