@@ -26,7 +26,7 @@ async function add_department() {
 
             console.log('Department added successfully');
 
-            document.getElementById('errorDisplay').innerText = '';
+            document.getElementById('errorDisplay').innerText = '';         
             setTimeout(() => {
                 window.location.href = 'all-departments.html';
             });

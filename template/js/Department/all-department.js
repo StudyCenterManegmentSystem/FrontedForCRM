@@ -1,8 +1,4 @@
 $(document).ready(function () {
-
-    if ($.fn.DataTable.isDataTable('#example3')) {
-        $('#example3').DataTable().destroy();
-    }
     // Make an AJAX request to the API
     $.ajax({
         url: 'https://localhost:7177/api/rooms/all-room',
@@ -23,18 +19,17 @@ $(document).ready(function () {
         }
     });
 
-    // Attach click event handler to dynamically added delete buttons
     $('#example3').on('click', '.delete-btn', function (e) {
         e.preventDefault();
-        var $deleteButton = $(this); // Store reference to 'this'
+        var roomId = $(this).data('id');
+        var deleteButton = $(this); // Store reference to the button
 
-        var roomId = $deleteButton.data('id');
         $.ajax({
             url: `https://localhost:7177/api/rooms/delete/${roomId}`,
             type: 'DELETE',
             success: function (response) {
-                // Remove the row from the table
-                $deleteButton.closest('tr').remove();
+                // Remove the row from the table using the stored reference
+                deleteButton.closest('tr').remove();
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);
