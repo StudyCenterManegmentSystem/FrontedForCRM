@@ -1,46 +1,33 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const apiUrl = 'https://localhost:7177/api/rooms/all-room';
-
-    function fetchDepartments() {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                displayDepartments(data);
-            })
-            .catch(error => {
-                console.error('Error fetching departments:', error);
+$(document).ready(function () {
+    // Make an AJAX request to the API
+    $.ajax({
+        url: 'https://localhost:7177/api/rooms/all-room',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            $.each(data, function (index, item) {
+                $('#example3').append('<tr><td>' + item.id + '</td><td>' + item.qavat + '</td><td>' + item.sigimi + '</td><td>' + item.roomName + '</td><td><button class="btn btn-danger delete-btn" data-id="' + item.id + '">Delete</button></td></tr>');
             });
-    }
-
-    function displayDepartments(departments) {
-        const tableBody = document.querySelector('#example3 tbody');
-        if (!tableBody) {
-            console.error('Table body not found');
-            return;
+            $('#example3').DataTable();
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
         }
+    });
+    $('#example3').on('click', '.delete-btn', function (e) {
+        e.preventDefault();
+        var $deleteButton = $(this); 
 
-        tableBody.innerHTML = '';
-
-        departments.forEach(department => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${department.id}</td>
-                <td>${department.floor}</td>
-                <td>${department.studentCount}</td>
-                <td>${department.roomName}</td>
-                <td>
-                    <button class="btn btn-primary">Edit</button>
-                    <button class="btn btn-danger">Delete</button>
-                </td>
-            `;
-            tableBody.appendChild(row);
+        var roomId = $deleteButton.data('id');
+        $.ajax({
+            url: `https://localhost:7177/api/rooms/delete/${roomId}`,
+            type: 'DELETE',
+            success: function (response) {
+                $deleteButton.closest('tr').remove();
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
         });
-    }
-
-    fetchDepartments();
+    });
 });
