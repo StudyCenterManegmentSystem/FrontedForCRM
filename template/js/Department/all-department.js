@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+    if ($.fn.DataTable.isDataTable('#example3')) {
+        $('#example3').DataTable().destroy();
+    }
     // Make an AJAX request to the API
     $.ajax({
         url: 'https://localhost:7177/api/rooms/all-room',
