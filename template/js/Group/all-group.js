@@ -5,17 +5,40 @@ function fetchGroupData() {
         url: 'https://localhost:7177/api/groups/get-all-guruh',
         type: 'GET',
         dataType: 'json',
-        success: function (data) {
+        success: function(data) {
             // Call function to populate HTML with group data
             populateGroupHTML(data);
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
             console.error('Error fetching group data:', error);
         }
     });
 }
 
-// Function to format datetime string as "Month Day Year"
+// Delete group function
+function deleteGroup(groupId) {
+    // Make AJAX request
+    $.ajax({
+        url: `https://localhost:7177/api/groups/delete-guruh/${groupId}`,
+        type: 'DELETE',
+        dataType: 'json', // Change dataType to json
+        success: function(data) {
+            // Optional: handle success response if needed
+        },
+        error: function(xhr, status, error) {
+            console.error('Error deleting group:', error);
+        }
+    });
+}
+
+$('.row').on('click', '.delete-btn', function(e) {
+    e.preventDefault();
+    var groupId = $(this).data('id');
+    // Call deleteGroup function
+    deleteGroup(groupId);
+});
+
+// Function to format datetime string as "Month Day, Year"
 function formatDateTime(datetimeString) {
     // Parse datetime string into a Date object
     var date = new Date(datetimeString);
@@ -29,7 +52,7 @@ function formatDateTime(datetimeString) {
     var day = date.getDate();
     var year = date.getFullYear();
 
-    var formattedDate = month + ' ' + (day < 10 ? '0' + day : day) + ' ' + year;
+    var formattedDate = month + ' ' + (day < 10 ? '0' + day : day) + ', ' + year;
 
     return formattedDate;
 }
@@ -40,9 +63,12 @@ function populateGroupHTML(data) {
     var container = $('.row');
 
     // Iterate over the group data and create HTML for each group
-    data.forEach(function (group) {
+    data.forEach(function(group) {
         // Format start datetime
         var formattedStart = formatDateTime(group.start);
+
+        // Calculate student count
+        var studentCount = group.students ? group.students.length : 0;
 
         // Create HTML for group card
         var groupHTML = `
@@ -71,19 +97,21 @@ function populateGroupHTML(data) {
                         </li>
                         <li class='list-group-item px-0 d-flex justify-content-between'>
                             <span>
-                                <i class='mr-2'>Room :</i>
-                                &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-                                 &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-                                  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <strong>${group.room.roomName}</strong>
+                                <i class='text-primary mr-2'></i>Room 
                             </span>
+                            <strong>${group.room.roomName}</strong>
                         </li>
-                        <!-- Add more list items as needed -->
+                        <li class='list-group-item px-0 d-flex justify-content-between'>
+                            <span>
+                                <i class="text-primary mr-2"></i>Delete Group
+                            </span>
+                            <strong><a href="all-group.html" class="delete-btn" data-id="${group.id}">Delete</a></strong>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
     `;
-    
 
         // Append group HTML to the container
         container.append(groupHTML);
@@ -91,6 +119,6 @@ function populateGroupHTML(data) {
 }
 
 // Call fetchGroupData function when the page is ready
-$(document).ready(function () {
+$(document).ready(function() {
     fetchGroupData();
 });
