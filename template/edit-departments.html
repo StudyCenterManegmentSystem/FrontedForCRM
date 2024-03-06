@@ -131,7 +131,6 @@
                         <ul aria-expanded="false">
                             <li><a href="all-students.html">All Students</a></li>
                             <li><a href="add-student.html">Add Students</a></li>
-                            <li><a href="edit-student.html">Edit Students</a></li>
                         </ul>
                     </li>
 					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -213,38 +212,37 @@
 								<h5 class="card-title">Edit Department</h5>
 							</div>
 							<div class="card-body">
-                                <form action="#" method="post">
+                                <form id="editDepartmentForm">
 									<div class="row">
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label class="form-label">Department Name</label>
-												<input type="text" class="form-control" value="Sales Assistant">
+												<input type="text" id ="departmentName" name="departmentName" class="form-control">
 											</div>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label class="form-label">Head Of Department</label>
-												<input type="text" class="form-control" value="Tiger Nixon">
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label class="form-label">Department Start Date</label>
-												<input name="datepicker" class="datepicker-default form-control" id="datepicker" value="07 August, 2020">
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12">
-											<div class="form-group">
-												<label class="form-label">Student Capacity</label>
-												<input type="text" class="form-control" value="200">
-											</div>
-										</div>
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="form-group">
-												<label class="form-label">Department Details</label>
-												<textarea class="form-control" rows="5">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</textarea>
-											</div>
-										</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label" for="floor">Floor</label>
+                                                <input type="number" id="floor" name="floor" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label" for="studentcount">Student Count</label>
+                                                <input type="number" id="studentcount" name="studentcount"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label" for="departmentId">Department ID</label>
+                                                <input type="text" id="departmentId" name="departmentId" class="form-control">
+                                            </div>
+                                        </div>                                        
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div id="result" style="color: green;"></div>
+                                            <div id="errorDisplay" style="color: red;"></div>
+                                        </div>
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<button type="submit" class="btn btn-primary">Submit</button>
 											<button type="submit" class="btn btn-light">Cencel</button>
@@ -306,7 +304,7 @@
     <script src="vendor/pickadate/picker.js"></script>
     <script src="vendor/pickadate/picker.time.js"></script>
     <script src="vendor/pickadate/picker.date.js"></script>
-	
+	<script src="js/Department/editdepartment.js"></script>
 	<!-- Pickdate -->
     <script src="js/plugins-init/pickadate-init.js"></script>
 	
