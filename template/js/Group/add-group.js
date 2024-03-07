@@ -4,7 +4,32 @@ document.getElementById('addGroupForm').addEventListener('submit', function(even
     var checkboxes = document.querySelectorAll('.form-check-input');
     checkboxes.forEach(function(checkbox) {
         if (checkbox.checked) {
-            selectedWeekdays.push(checkbox.value); 
+            // Convert the string value of the weekday to its integer representation
+            switch (checkbox.value) {
+                case 'Monday':
+                    selectedWeekdays.push(1);
+                    break;
+                case 'Tuesday':
+                    selectedWeekdays.push(2);
+                    break;
+                case 'Wednesday':
+                    selectedWeekdays.push(3);
+                    break;
+                case 'Thursday':
+                    selectedWeekdays.push(4);
+                    break;
+                case 'Friday':
+                    selectedWeekdays.push(5);
+                    break;
+                case 'Saturday':
+                    selectedWeekdays.push(6);
+                    break;
+                case 'Sunday':
+                    selectedWeekdays.push(7);
+                    break;
+                default:
+                    break;
+            }
         }
     });
     var formData = {
@@ -19,7 +44,7 @@ document.getElementById('addGroupForm').addEventListener('submit', function(even
         duration: document.getElementById('duration').value
     };
 
-    var apiUrl = 'https://localhost:7177/api/groups/create-guruh'; // Corrected URL
+    var apiUrl = 'https://localhost:7177/api/groups/create-guruh';
     fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -27,7 +52,15 @@ document.getElementById('addGroupForm').addEventListener('submit', function(even
         },
         body: JSON.stringify(formData)
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        setTimeout(() => {
+            window.location.href = './all-groups.html';
+        }, 2000);
+        return response.json();
+    })
     .then(data => {
         console.log('Success:', data);
         alert('Group added successfully!');

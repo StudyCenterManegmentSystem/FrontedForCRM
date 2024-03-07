@@ -4,10 +4,10 @@ async function addCourse() {
     const courseData = {
         fanName: name,
         fanDescription: description
-    }
+    };
 
-    try{
-        const response = await fetch('https://localhost:7117/api/fans/create-fan', {
+    try {
+        const response = fetch('https://localhost:7177/api/fans/create-fan', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -15,7 +15,7 @@ async function addCourse() {
             body: JSON.stringify(courseData)
         });
 
-        if (response.ok === true || response.status === 201 || response.status === 200) {
+        if (response.ok) {
             const resultDiv = document.getElementById("result");
             resultDiv.innerHTML = "Kurs muvaffaqiyatli qo'shildi.";
             resultDiv.style.color = 'green';
@@ -25,14 +25,15 @@ async function addCourse() {
             setTimeout(() => {
                 window.location.href = './all-courses.html';
             }, 2000);
-        } else if (response.status === 400 || response.status === 404 || response.status === 500) {
-            const resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = "Kurs qo'shib bo'lmadi. Iltimos, qayta urunib ko'ring.";
-            resultDiv.style.color = 'red';
-            resultDiv.style.display = 'block';
+        } else {
+            const errorMessage = await response.text();
+            throw new Error(`Error adding course: ${response.status} - ${errorMessage}`);
         }
-    }
-    catch (error) {
-        console.log(error);
+    } catch (error) {
+        console.error('Error adding course:', error);
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = "Kurs qo'shib bo'lmadi. Iltimos, qayta urunib ko'ring.";
+        resultDiv.style.color = 'red';
+        resultDiv.style.display = 'block';
     }
 }
