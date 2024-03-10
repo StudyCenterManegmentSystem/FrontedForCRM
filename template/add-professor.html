@@ -9,13 +9,58 @@
     <title>Edumin - Bootstrap Admin Dashboard </title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
-    <link rel="stylesheet" href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="css/selectSkin.css">
     <!-- Pick date -->
     <link rel="stylesheet" href="vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="vendor/pickadate/themes/default.date.css">
+    <style>
+        /* Override default select styles */
+        .selectpicker {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #fff;
+            /* Add desired background color */
+        }
 
+        /* Adjust dropdown arrow position */
+        .selectpicker+.bootstrap-select>.dropdown-toggle {
+            padding-right: 30px;
+        }
+
+        /* Style dropdown arrow */
+        .selectpicker+.bootstrap-select>.dropdown-toggle::after {
+            content: none;
+            /* Remove default arrow */
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 5px 5px 0 5px;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        /* Style dropdown menu */
+        .bootstrap-select .dropdown-menu {
+            border-radius: 5px;
+        }
+
+        /* Style dropdown items */
+        .bootstrap-select .dropdown-menu li a {
+            padding: 8px;
+        }
+
+        /* Hover effect on dropdown items */
+        .bootstrap-select .dropdown-menu li a:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
 </head>
 
 <body>
@@ -140,6 +185,7 @@
                     <ul aria-expanded="false">
                         <li><a href="all-students.html">All Students</a></li>
                         <li><a href="add-student.html">Add Students</a></li>
+                        <li><a href="edit-student.html">Edit Students</a></li>
                     </ul>
                 </li>
                 <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -164,13 +210,13 @@
                     </ul>
                 </li>
                 <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="la la-users"></i>
-                    <span class="nav-text">Group</span>
+                        <i class="la la-users"></i>
+                        <span class="nav-text">Group</span>
                     </a>
                     <ul aria-expanded="false">
-                       <li><a href="all-group.html">All Group</a></li>
-                       <li><a href="add-group.html">Add Group</a></li>
-                       <li><a href="edit-group.html">Edit Group</a></li>
+                        <li><a href="all-group.html">All Group</a></li>
+                        <li><a href="add-group.html">Add Group</a></li>
+                        <li><a href="edit-group.html">Edit Group</a></li>
                     </ul>
                 </li>
                 <li class="nav-label">Extra</li>
@@ -246,18 +292,7 @@
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label class="form-label">Fanlar</label>
-                                            <select class="form-control" multiple id="fanIds">
-                                                <option>Department</option>
-                                                <option>65e1d673006818c51d128a28</option>
-                                                <option>Angular</option>
-                                                <option>React</option>
-                                                <option>Vue.js</option>
-                                                <option>Ruby</option>
-                                                <option>PHP</option>
-                                                <option>ASP.NET</option>
-                                                <option>Python</option>
-                                                <option>MySQL</option>
-                                            </select>
+                                            <select class="form-control selectpicker" multiple id="fanIds"></select>
                                         </div>
 
                                     </div>
@@ -267,12 +302,12 @@
                                             <input type="password" id="confirmPassword" class="form-control">
                                         </div>
                                     </div>
-
                                     <div id="result" style="color: green;"></div>
                                     <div id="errorDisplay" style="color: red;"></div>
 
                                     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                                        <button type="button" onclick="addProfesser()" class="btn btn-primary">Ro'yhatdan o'tkazish</button>
+                                        <button type="button" onclick="addProfesser()"
+                                            class="btn btn-primary">Ro'yhatdan o'tkazish</button>
                                     </div>
 
                                 </div>
@@ -319,7 +354,6 @@
     ***********************************-->
     <!-- Required vendors -->
     <script src="vendor/global/global.min.js"></script>
-    <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="js/custom.min.js"></script>
     <script src="js/dlabnav-init.js"></script>
 
