@@ -1,0 +1,50 @@
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 200px; /* Set the width of the dropdown */
+}
+
+.dropdown .select-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* Dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    width: 100%;
+    max-height: 150px; /* Set the maximum height of the dropdown content */
+    overflow-y: auto; /* Enable vertical scrolling */
+    z-index: 1;
+}
+
+/* Dropdown options */
+.dropdown-content label {
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Hover effect for options */
+.dropdown-content label:hover {
+    background-color: #f0f0f0;
+}
+
+/* Show dropdown content when dropdown button is clicked */
+.dropdown.active .dropdown-content {
+    display: block;
+}

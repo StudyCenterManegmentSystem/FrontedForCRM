@@ -20,6 +20,20 @@ $(document).ready(function() {
             }
         ]
     });
+    $('#example3').on('click', '.edit-btn', function(e) {
+        e.preventDefault(); 
+        var studentId = $(this).data('id');
+        var firstName = $(this).data('firstname');
+        var lastName = $(this).data('lastname');
+        var phoneNumber = $(this).data('phonenumber');
+        
+        $('#editStudentModal #studentId').val(studentId);
+        $('#editStudentModal #firstName').val(firstName);
+        $('#editStudentModal #lastName').val(lastName);
+        $('#editStudentModal #phoneNumber').val(phoneNumber);
+        $('#editStudentModal').modal('show');
+    });
+
     $('#example3').on('click', '.delete-btn', function(e) {
         e.preventDefault();
         var studentId = $(this).data('id');

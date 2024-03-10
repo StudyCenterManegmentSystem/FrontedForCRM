@@ -21,9 +21,8 @@ function deleteGroup(groupId) {
     $.ajax({
         url: `https://localhost:7177/api/groups/delete-guruh/${groupId}`,
         type: 'DELETE',
-        dataType: 'json', // Change dataType to json
+        dataType: 'json',
         success: function(data) {
-            // Optional: handle success response if needed
         },
         error: function(xhr, status, error) {
             console.error('Error deleting group:', error);
@@ -112,13 +111,9 @@ function populateGroupHTML(data) {
             </div>
         </div>
     `;
-
-        // Append group HTML to the container
         container.append(groupHTML);
     });
 }
-
-// Call fetchGroupData function when the page is ready
 $(document).ready(function() {
     fetchGroupData();
 });

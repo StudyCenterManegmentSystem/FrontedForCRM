@@ -39,7 +39,7 @@ jQuery(window).on('load',function(){
     typographySelect.on('change', function() {
         body.attr('data-typography', this.value);
     });
-
+    
     //change the theme version controller
     versionSelect.on('change', function() {
         body.attr('data-theme-version', this.value);

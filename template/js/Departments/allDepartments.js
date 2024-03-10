@@ -37,3 +37,4 @@ window.onload = function () {
             displayData(data); // Call a function to display the data
         });
 };
+//ALL DEPARTMENT

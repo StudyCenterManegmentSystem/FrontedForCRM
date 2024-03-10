@@ -1,3 +1,31 @@
+const APITOROOMS = "https://localhost:7177/api/fans/get-all-fans";
+let fanSelect = document.getElementById("fanIds");
+
+function loadFans() {
+    fetch(APITOROOMS)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return res.json();
+        })
+        .then(data => {
+            fanSelect.innerHTML = ""; // Clear the select options before populating
+            data.forEach(fan => {
+                const option = document.createElement("option");
+                option.value = fan.id;
+                option.textContent = fan.fanName;
+                console.log("option to rooms", option);
+                fanSelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error("Error loading fans:", error);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', loadFans);
+
 async function addProfesser() {
     const firstname = document.getElementById("firstname").value;
     const lastname = document.getElementById("lastname").value;
