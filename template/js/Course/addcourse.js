@@ -15,7 +15,7 @@ async function addCourse() {
             body: JSON.stringify(courseData)
         });
 
-        if (response.ok) {
+        if (response.ok || (await response).status == 200 || (await response).status == 201) {
             const resultDiv = document.getElementById("result");
             resultDiv.innerHTML = "Kurs muvaffaqiyatli qo'shildi.";
             resultDiv.style.color = 'green';
