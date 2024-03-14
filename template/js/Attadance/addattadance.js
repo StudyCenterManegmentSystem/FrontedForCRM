@@ -1,31 +1,35 @@
 function submitAttendance() {
-    const talabaId = document.getElementById('talabaId').value;
-    const groupId = document.getElementById('groupId').value;
-    const keldiKemadi = document.getElementById('keldiKemadi').value;
-    const qachon = new Date(document.getElementById('qachon').value).toISOString();
-    const data = {
-        "talabaId": talabaId,
-        "qachon": qachon,
-        "keldiKemadi": keldiKemadi,
-        "groupId": groupId
+    const talabaId = document.getElementById("talabaId").value;
+    const groupId = document.getElementById("groupId").value;
+    const keldiKemadi = document.getElementById("keldiKemadi").value === "true";
+    const qachon = document.getElementById("qachon").value;
+    const jsonData = {
+        talabaId,
+        qachon,
+        keldiKemadi,
+        groupId,
     };
-    fetch('https://localhost:7177/api/attendances/create-attendance', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+
+    if (!talabaId || !groupId || !keldiKemadi || !qachon) {
+        document.getElementById('errorDisplay').innerText = 'Please fill in all fields.';
+        return;
+    }
+    fetch("https://localhost:7177/api/attendances/create-attendance", {
+        method: "POST",
+        body: JSON.stringify(jsonData),
+        headers: { "Content-Type": "application/json" },
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(jsonResponse => {
-        console.log(jsonResponse);
-    })
-    .catch(error => {
-        console.error('There was a problem with your fetch operation:', error);
-    });
+        .then((response) => {
+            if (response.ok) {
+                document.getElementById("result").textContent = "Attendance submitted successfully!";
+                document.getElementById("attendanceForm").reset();
+            } else {
+                response.text().then((text) => {
+                    document.getElementById("errorDisplay").textContent = "Error: " + text;
+                });
+            }
+        })
+        .catch((error) => {
+            document.getElementById("errorDisplay").textContent = "Error: " + error;
+        });
 }
