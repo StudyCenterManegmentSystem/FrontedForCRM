@@ -156,6 +156,16 @@
                            <li><a href="edit-attandance.html">Edit Attandance</a></li>
                         </ul>
                     </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="la la-users"></i>
+                        <span class="nav-text">Payment</span>
+                        </a>
+                        <ul aria-expanded="false">
+                           <li><a href="all">All Payments</a></li>
+                           <li><a href="add-payment.html">Add Payment</a></li>
+                           <li><a href="edit">Edit Payment</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-label">Extra</li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="la la-th-list"></i>
@@ -175,14 +185,14 @@
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>Add Atandance</h4>
+                            <h4>Add Payment</h4>
                         </div>
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0);">Attandance</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0);">Add Attandance</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:void(0);">Payment</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:void(0);">Add Payment</a></li>
                         </ol>
                     </div>
                 </div>
@@ -191,7 +201,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Attendance Details</h4>
+                                <h4 class="card-title">Payment Details</h4>
                             </div>
                             <div class="card-body">
                                 <form action="#" method="post" id="attendanceForm">
@@ -210,24 +220,27 @@
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label class="form-label">Came or Not</label>
-                                                <select id="keldiKemadi" class="form-control">
-                                                    <option value="true">Came</option>
-                                                    <option value="false">Did Not Come</option>
-                                                </select>
+                                                <label class="form-label">When</label>
+                                                <input type="datetime-local" id="qachontolangan" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12">
                                             <div class="form-group">
-                                                <label class="form-label">When</label>
-                                                <input type="datetime-local" id="qachon" class="form-control">
+                                                <label class="form-label">How much</label>
+                                                <input type="text" id="qanchatolangan" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Type</label>
+                                                <input type="text" id="paymentType" class="form-control">
                                             </div>
                                         </div>
                                     </div>
                                     <div id="result" style="color: green;"></div>
                                     <div id="errorDisplay" style="color: red;"></div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                                        <button type="button" onclick="submitAttendance()" class="btn btn-primary">Submit</button>
+                                        <button type="button" onclick="addpayment()" class="btn btn-primary">Submit</button>
                                     </div>
                                 </form>
                             </div>
@@ -257,6 +270,6 @@
     <script src="vendor/pickadate/picker.time.js"></script>
     <script src="vendor/pickadate/picker.date.js"></script>
     <script src="js/plugins-init/pickadate-init.js"></script>
-    <script src="js/Attandance/add-attandance.js"></script>
+    <script src="js/Payment/add-payment.js"></script>
 </body>
 </html>
