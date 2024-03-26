@@ -13,10 +13,10 @@ async function fetchFormattedPayments() {
 
         const paymentsData = await response.json();
         const formattedPayments = paymentsData.map(item => ({
-            Id: item.Id,
+            Id: item.id,
             StudentId: item.student.id,
-            GroupId: item.student.guruh.id,
-            Paid: item.qanchaTolagan,
+            GroupId: item.student.guruh.id, 
+            Paid: item.qanchaTolagan, 
             WhenPaid: formatDateTime(item.qachonTolagan), 
         }));
         return formattedPayments;
@@ -25,6 +25,7 @@ async function fetchFormattedPayments() {
         return null;
     }
 }
+
 function formatDateTime(dateTimeString) {
     const dateTime = new Date(dateTimeString);
     const options = {
@@ -38,21 +39,25 @@ function formatDateTime(dateTimeString) {
     };
     return dateTime.toLocaleString('uz-UZ', options);
 }
+
 async function displayFormattedPayments() {
     const formattedPayments = await fetchFormattedPayments();
     if (formattedPayments) {
-        const table = $('#payments').DataTable({
-            destroy: true, 
+        const table = $('#payments1').DataTable({
+            destroy: true,
+            columns: [
+                { data: 'Id' },
+                { data: 'StudentId' },
+                { data: 'GroupId' },
+                { data: 'Paid' },
+                { data: 'WhenPaid' }
+            ]
         });
 
+        table.clear().draw(); 
+
         formattedPayments.forEach(payment => {
-            table.row.add([
-                payment.Id,
-                payment.StudentId,
-                payment.GroupId,
-                payment.Paid,
-                payment.WhenPaid
-            ]);
+            table.row.add(payment);
         });
 
         table.draw(); 
@@ -60,4 +65,5 @@ async function displayFormattedPayments() {
         console.log('Failed to fetch and format payments');
     }
 }
+
 displayFormattedPayments();
