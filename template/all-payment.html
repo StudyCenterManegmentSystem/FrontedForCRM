@@ -10,12 +10,10 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+    <!-- Datatable -->
+    <link href="vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-
-    <!-- Pick date -->
-    <link rel="stylesheet" href="vendor/pickadate/themes/default.css">
-    <link rel="stylesheet" href="vendor/pickadate/themes/default.date.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -151,15 +149,15 @@
                         </ul>
                     </li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="la la-users"></i>
-                        <span class="nav-text">Payment</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="all-payment.html">All Payment</a></li>
-                        <li><a href="add-payment.html">Add Payment</a></li>
-                        <li><a href="edit.html">Edit Payment</a></li>
-                    </ul>
-                </li>
+                            <i class="la la-users"></i>
+                            <span class="nav-text">Payment</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="all-payment.html">All Payments</a></li>
+                            <li><a href="add-payment.html">Add Payment</a></li>
+                            <li><a href="edit-group.html">Edit Group</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-label">Extra</li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="la la-th-list"></i>
@@ -168,6 +166,7 @@
                         <ul aria-expanded="false">
                             <li><a href="page-register.html">Register</a></li>
                             <li><a href="page-login.html">Login</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -176,51 +175,32 @@
         <div class="content-body">
             <!-- row -->
             <div class="container-fluid">
-				    
-				<div class="row page-titles mx-0">
-                    <div class="col-sm-6 p-md-0">
-                        <div class="welcome-text">
-                            <h4>All Payment</h4>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">All Payments</h4>
+                                <a href="add-payment.html" class="btn btn-primary">+ Add new</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="payments1" class="display">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>StudentId</th>
+                                                <th>GroupId</th>
+                                                <th>Paid</th>
+                                                <th>When paid</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0);">Payments</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0);">All Payment</a></li>
-                        </ol>
-                    </div>
                 </div>
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="row tab-content">
-							<div id="list-view" class="tab-pane fade active show col-lg-12">
-								<div class="card">
-									<div class="card-header">
-										<h4 class="card-title">All Payment List</h4>
-										<a href="add-payment.html" class="btn btn-primary">+ Add new</a>
-									</div>
-									<div class="card-body">
-										<div class="table-responsive">
-											<table id="payments" class="display" style="min-width: 845px">
-												<thead>
-													<tr>
-														<th>Id</th>
-														<th>StudentId</th>
-														<th>GroupId</th>
-														<th>Paid</th>
-														<th>When paid</th>
-													</tr>
-												</thead>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			   
             </div>
         </div>
 
@@ -230,18 +210,23 @@
             </div>
         </div>
 
-        <script src="vendor/global/global.min.js"></script>
-        <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-        <script src="js/custom.min.js"></script>
-        <script src="js/dlabnav-init.js"></script>
-        <script src="js/Payment/all-payments.js"></script>
-        <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
-        <script src="vendor/svganimation/vivus.min.js"></script>
-        <script src="vendor/svganimation/svg.animation.js"></script>
-        <script src="js/styleSwitcher.js"></script>
     </div>
+    <!-- Required vendors -->
+    <script src="vendor/global/global.min.js"></script>
+    <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/dlabnav-init.js"></script>
+    <script src="js/Payment/all-payments.js">   </script>
+    <!-- Datatable -->
+    <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="js/plugins-init/datatables.init.js"></script>
+
+    <!-- Svganimation scripts -->
+    <script src="vendor/svganimation/vivus.min.js"></script>
+    <script src="vendor/svganimation/svg.animation.js"></script>
+    <script src="js/styleSwitcher.js"></script>
+
 </body>
 
 </html>
