@@ -37,3 +37,69 @@ function addpayment() {
     };
     xhr.send(JSON.stringify(data));
 }
+
+const API_TO_STUDENTS = "https://localhost:7177/api/students/get-all-students";
+let studentIdSelect = document.getElementById("talabaId");
+
+function loadStudents() {
+    fetch(API_TO_STUDENTS)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return res.json();
+        })
+        .then(data => {
+            if (studentIdSelect) { // Ensure studentIdSelect exists before accessing it
+                studentIdSelect.innerHTML = "";
+                data.forEach(student => {
+                    const option = document.createElement("option");
+                    option.value = student.id;
+                    option.textContent = student.lastName + " " + student.firstName;
+                    console.log(option);
+                    studentIdSelect.appendChild(option);
+                });
+                // Refresh Bootstrap Select Picker after modifying options
+                $('.selectpicker').selectpicker('refresh');
+            } else {
+                console.error("Element with ID 'talabaId' not found.");
+            }
+        })
+        .catch(error => {
+            console.log("Error loading students: ", error);
+        });
+}
+loadStudents();
+
+const API_TO_GROUPS = "https://localhost:7177/api/groups/get-all-guruh";
+let groupIdSelect = document.getElementById("groupId");
+
+function loadGroup() {
+    fetch(API_TO_GROUPS)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return res.json(); // Parse response as JSON
+        })
+        .then(data => {
+            if (groupIdSelect) {
+                groupIdSelect.innerHTML = "";
+                data.forEach(group => {
+                    const option = document.createElement("option");
+                    option.value = group.id;
+                    option.textContent = group.groupName;
+                    groupIdSelect.appendChild(option);
+                });
+                // Initialize Bootstrap Select Picker after modifying options
+                $('.selectpicker').selectpicker('refresh');
+            } else {
+                console.error("Element with ID 'groupId' not found.");
+            }
+        })
+        .catch(error => {
+            console.log("Error loading groups: ", error);
+        });
+}
+
+loadGroup();

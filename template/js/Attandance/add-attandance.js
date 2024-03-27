@@ -49,9 +49,6 @@ function submitAttendance() {
         });
 }
 
-
-// Rest of your code remains unchanged...
-
 const API_TO_STUDENTS = "https://localhost:7177/api/students/get-all-students";
 let studentIdSelect = document.getElementById("studentId");
 
