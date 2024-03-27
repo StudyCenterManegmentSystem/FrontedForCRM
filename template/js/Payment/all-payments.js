@@ -14,10 +14,10 @@ async function fetchFormattedPayments() {
         const paymentsData = await response.json();
         const formattedPayments = paymentsData.map(item => ({
             Id: item.id,
-            StudentId: item.student.id,
-            GroupId: item.student.guruh.id, 
-            Paid: item.qanchaTolagan, 
-            WhenPaid: formatDateTime(item.qachonTolagan), 
+            StudentId: item.student.lastName + ' ' + item.student.firstName,
+            GroupId: item.student.guruh.groupName,
+            Paid: item.qanchaTolagan,
+            WhenPaid: formatDateTime(item.qachonTolagan),
         }));
         return formattedPayments;
     } catch (error) {
@@ -54,8 +54,7 @@ async function displayFormattedPayments() {
             ]
         });
 
-        table.clear().draw(); 
-
+        table.clear().draw();
         formattedPayments.forEach(payment => {
             table.row.add(payment);
         });
