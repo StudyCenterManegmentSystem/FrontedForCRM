@@ -1,6 +1,5 @@
 function formatDateTime(dateTime) {
     var date = new Date(dateTime);
-
     var day = date.getDate();
     var month = date.toLocaleString('default', { month: 'long' }); 
     var year = date.getFullYear();
@@ -15,6 +14,7 @@ function formatDateTime(dateTime) {
 
     return formattedDateTime;
 }
+
 function fetchAttendanceData() {
     $.ajax({
         url: 'https://localhost:7177/api/attendances/getall-attendace',
@@ -28,6 +28,7 @@ function fetchAttendanceData() {
         }
     });
 }
+
 function populateAttendanceHTML(data) {
     var container = $('.attendance-container');
     container.empty(); 

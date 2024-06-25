@@ -24,6 +24,5 @@
 		
 	jQuery(window).on('resize',function(){
 		new dlabSettings(dlabSettingsOptions); 
-	});     
-	
+	});
 })(jQuery);

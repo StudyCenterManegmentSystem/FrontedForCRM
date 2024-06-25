@@ -1,9 +1,15 @@
 const APITOROOMS = "https://localhost:7177/api/fans/get-all-fans";
 let fanSelect = document.getElementById("fanIds");
 
+console.log(localStorage.getItem('token'));
+
 // Function to load fans
 function loadFans() {
-  fetch(APITOROOMS)
+  fetch(APITOROOMS, {
+    headers: {
+      'Authorization': localStorage.getItem('token')
+    }
+  })
     .then(res => {
       if (!res.ok) {
         throw new Error("Network response was not ok");
@@ -13,7 +19,7 @@ function loadFans() {
     .then(data => {
       fanSelect.innerHTML = "";
       data.forEach(fan => {
-        const option = document.createElement("option");
+        const option = document.createEleme nt("option");
         option.value = fan.id;
         option.textContent = fan.fanName;
         console.log("option to rooms", option);
@@ -37,7 +43,7 @@ function redirectToLoginPage() {
     window.location.href = "page-login.html"; // Redirect to login page
     return true; // Return true to indicate redirection happened
   }
-  return false; // Return false if token is found
+  return false; 
 }
 
 // Function to add professor
@@ -62,14 +68,12 @@ async function addProfessor() {
     fanIds: selectedFanIds
   };
 
-  console.log(TOKEN);
-
   try {
     const response = await fetch('https://localhost:7177/api/admins/register-teacher', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${TOKEN}` // Include "Bearer" prefix
+        'Authorization': `Bearer ${TOKEN}` 
       },
       body: JSON.stringify(professorData)
     });
@@ -90,7 +94,6 @@ async function addProfessor() {
       switch (response.status) {
         case 401:
           resultDiv.innerHTML = "Unauthorized access. Please login again.";
-          window.location.href = "page-login.html"; // Redirect to login on 401
           throw new Error("Unauthorized access. Please login again.");
         case 400:
           resultDiv.innerHTML = "Professor data is invalid. Please check and try again.";
@@ -112,7 +115,5 @@ async function addProfessor() {
 }
 
 window.addEventListener('DOMContentLoaded', loadFans);
-
 window.addEventListener('DOMContentLoaded', clearLocalStoragePeriodically);
-
 window.addEventListener('DOMContentLoaded', redirectToLoginPage);

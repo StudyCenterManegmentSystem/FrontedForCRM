@@ -11,7 +11,6 @@ $(document).ready(function() {
       }
     },
     "columns": [
-      { "data": "teacherId" },
       { "data": "firstName" },
       { "data": "lastName" },
       { "data": "email" },

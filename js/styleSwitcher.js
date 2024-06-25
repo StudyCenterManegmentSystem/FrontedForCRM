@@ -8,19 +8,15 @@ function addSwitcher()
 		 const sr = new PerfectScrollbar('.sidebar-right-inner');
 		 
 		  $('.sidebar-right-trigger').on('click', function() {
-				$('.sidebar-right').toggleClass('show');
+				$('.sidebar-right').togglClass('show');
 		  });
 	}
 }
-jQuery(window).on('load',function(){
-	
-	
-	
-});
 (function($) {
+
     "use strict"
 	addSwitcher();
-
+    
 	
     const body = $('body');
     const html = $('html');
@@ -45,7 +41,7 @@ jQuery(window).on('load',function(){
         body.attr('data-theme-version', this.value);
     });
 
-    //change the sidebar position controller
+    //change the sidebar position controllerjeq;fewfgegeg
     sidebarPositionSelect.on('change', function() {
         this.value === "fixed" && body.attr('data-sidebar-style') === "modern" && body.attr('data-layout') === "vertical" ? 
         alert("Sorry, Modern sidebar layout dosen't support fixed position!") :

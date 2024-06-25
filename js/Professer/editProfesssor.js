@@ -25,5 +25,5 @@ function changePassword() {
     .catch(error => {
         console.error('There was a problem changing the password:', error);
         alert('Error changing password: ' + error.message); 
-    });
-}
+    }); 
+}   

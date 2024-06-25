@@ -1,5 +1,5 @@
 const TOKEN = localStorage.getItem('token');
-
+console.log(localStorage.getItem('token'));
 $(document).ready(function() {
     if ($.fn.DataTable.isDataTable('#example3')) {
         $('#example3').DataTable().destroy();
@@ -13,7 +13,6 @@ $(document).ready(function() {
             "dataSrc": ""
         },
         "columns": [
-            { "data": "id" },
             { "data": "firstName" },
             { "data": "lastName" },
             { "data": "phoneNumber" },
