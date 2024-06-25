@@ -6,22 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edumin - Bootstrap Admin Dashboard </title>
-    <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
     <link rel="stylesheet" href="vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="vendor/pickadate/themes/default.date.css">
-    <!-- Bootstrap CSS from CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
 </head>
 
 <body>
-
-    <!--*******************
-        Preloader start
-    ********************-->
     <div id="preloader">
         <div class="sk-three-bounce">
             <div class="sk-child sk-bounce1"></div>
@@ -29,18 +23,9 @@
             <div class="sk-child sk-bounce3"></div>
         </div>
     </div>
-    <!--*******************
-        Preloader end
-    ********************-->
 
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
     <div id="main-wrapper">
 
-        <!--**********************************
-            Nav header start
-        ***********************************-->
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
                 <img class="logo-abbr" src="images/logo-white.png" alt="">
@@ -54,13 +39,7 @@
                 </div>
             </div>
         </div>
-        <!--**********************************
-            Nav header end
-        ***********************************-->
-
-        <!--**********************************
-            Header start
-        ***********************************-->
+        
         <div class="header">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
@@ -113,13 +92,7 @@
                 </nav>
             </div>
         </div>
-        <!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
 
-        <!--**********************************
-            Sidebar start
-        ***********************************-->
         <div class="dlabnav">
             <div class="dlabnav-scroll">
                 <ul class="metismenu" id="menu">
@@ -134,6 +107,7 @@
                             <li><a href="edit-professor.html">Edit Professor</a></li>
                         </ul>
                     </li>
+                    
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="la la-users"></i>
                             <span class="nav-text">Students</span>
@@ -143,6 +117,7 @@
                             <li><a href="add-student.html">Add Students</a></li>
                         </ul>
                     </li>
+
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="la la-graduation-cap"></i>
                             <span class="nav-text">Courses</span>
@@ -154,16 +129,18 @@
                             <li><a href="about-courses.html">About Courses</a></li>
                         </ul>
                     </li>
+
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="la la-building"></i>
                             <span class="nav-text">Departments</span>
-                        </a>
+                        </a>e45r
                         <ul aria-expanded="false">
                             <li><a href="all-departments.html">All Departments</a></li>
                             <li><a href="add-departments.html">Add Departments</a></li>
                             <li><a href="edit-departments.html">Edit Departments</a></li>
                         </ul>
                     </li>
+
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="la la-users"></i>
                             <span class="nav-text">Group</span>
@@ -174,6 +151,7 @@
                            <li><a href="edit-group.html">Edit Group</a></li>
                         </ul>
                     </li>
+
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                         <i class="la la-users"></i>
                         <span class="nav-text">Attandance</span>
@@ -184,7 +162,7 @@
                            <li><a href="edit-attandance.html">Edit Attandance</a></li>
                         </ul>
                     </li>
-                    <!-- Payment -->
+                    
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                         <i class="la la-users"></i>
                         <span class="nav-text">Payment</span>
@@ -207,15 +185,7 @@
                 </ul>
             </div>
         </div>
-        <!--**********************************
-            Sidebar end
-        ***********************************-->
 
-
-
-        <!--**********************************
-            Content body start
-        ***********************************-->
         <div class="content-body">
             <div class="container-fluid">
 
@@ -256,7 +226,7 @@
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label class="form-label">Group name</label>
-                            <select class="form-control" style="width: 100%; height: 50%; border-radius: 20px;" multiple id="mySelect">
+                            <select class="form-control" style="width: 100%; height: 50%; border-radius: 20px;" multiple  id="mySelect">
                             </select>
                         </div>
                     </div>
@@ -272,31 +242,17 @@
             </div>
         </div>
 
-        <!--**********************************
-            Content body end
-        ***********************************-->
-
-
-        <!--**********************************
-            Footer start
-        ***********************************-->
         <div class="footer">
             <div class="copyright">
                 <p>Copyright © Designed &amp; Developed by <a href="../index.htm" target="_blank">DexignLab</a> 2020</p>
             </div>
         </div>
-        <!--**********************************
-            Footer end
-        ***********************************-->
     </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
     <script src="vendor/global/global.min.js"></script>
     <script src="js/custom.min.js"></script>
     <script src="js/dlabnav-init.js"></script>
     <script src="js/Student/addstudent.js"></script>
-    <!-- Svganimation scripts -->
+    
     <script src="vendor/svganimation/vivus.min.js"></script>
     <script src="vendor/svganimation/svg.animation.js"></script>
     <script src="js/styleSwitcher.js"></script>

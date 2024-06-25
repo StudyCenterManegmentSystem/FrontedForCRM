@@ -3,7 +3,6 @@ const APITOROOMS = "https://localhost:7177/api/rooms/all-room";
 const API_TO_TEACHER = "https://localhost:7177/api/admins/all-teachers-with-fans";
 const API_TO_CREATE_GROUP = "https://localhost:7177/api/groups/create-guruh";
 
-// Function to load fans
 function loadFans() {
     fetch(APITOFANS, {
         method: "GET",
@@ -32,8 +31,7 @@ function loadFans() {
         console.error("Error loading fans:", error);
     });
 }
-
-// Function to load rooms
+ x
 function loadRooms() {
     fetch(APITOROOMS, {
         method: "GET",
@@ -131,7 +129,7 @@ document.getElementById('addGroupForm').addEventListener('submit', function (eve
     fetch(API_TO_CREATE_GROUP, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json', 
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify(formData)

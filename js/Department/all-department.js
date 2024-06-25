@@ -7,7 +7,7 @@ $(document).ready(function () {
         success: function (data) {
             // Loop through the received data and append it to the table
             $.each(data, function (index, item) {
-                $('#example3').append('<tr><td>' + item.id + '</td><td>' + item.qavat + '</td><td>' + item.sigimi + '</td><td>' + item.roomName + '</td><td><button class="btn btn-danger delete-btn" data-id="' + item.id + '">Delete</button></td></tr>');
+                $('#example3').append('<tr><td>' + item.qavat + '</td><td>' + item.sigimi + '</td><td>' + item.roomName + '</td><td><button class="btn btn-danger delete-btn" data-id="' + item.id + '">Delete</button></td></tr>');
             });
 
             // Initialize DataTables

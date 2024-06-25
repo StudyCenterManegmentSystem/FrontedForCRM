@@ -1,17 +1,12 @@
 function submitAttendance() {
-    // Get form data
+
     const talabaId = document.getElementById("studentId").value;
     const groupId = document.getElementById("groupId").value;
     const keldiKemadiValue = document.getElementById("keldiKemadi").value;
     const keldiKemadi = keldiKemadiValue === "true"; // Convert string to Boolean
     const qachon = document.getElementById("qachon").value;
 
-    // Validate data (optional)
-    // You can add checks here to ensure required fields are filled and data is in the correct format
-
-    // Prepare data as JSON
     const jsonData = {
-        dto: "someValue", // Add a placeholder value for "dto" field
         talabaId: talabaId,
         qachon: qachon,
         keldiKemadi: keldiKemadi,
@@ -22,16 +17,14 @@ function submitAttendance() {
         document.getElementById('errorDisplay').innerText = 'Please fill in all fields.';
         return;
     }
-    // Send data to server using fetch API
     fetch("https://localhost:7177/api/attendances/create-attendance", {
         method: "POST",
         body: JSON.stringify(jsonData),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" },k
     })
         .then((response) => {
             if (response.ok || response.status === 200 || response.status === 201) {
                 document.getElementById("result").textContent = "Attendance submitted successfully!";
-                // Clear the form (optional)
                 document.getElementById("attendanceForm").reset();
 
                 setTimeout(() => {
@@ -61,7 +54,7 @@ function loadStudents() {
             return res.json();
         })
         .then(data => {
-            if (studentIdSelect) { // Ensure studentIdSelect exists before accessing it
+            if (studentIdSelect) {
                 studentIdSelect.innerHTML = "";
                 data.forEach(student => {
                     const option = document.createElement("option");
@@ -70,7 +63,6 @@ function loadStudents() {
                     console.log(option);
                     studentIdSelect.appendChild(option);
                 });
-                // Refresh Bootstrap Select Picker after modifying options
                 $('.selectpicker').selectpicker('refresh');
             } else {
                 console.error("Element with ID 'talabaId' not found.");
@@ -89,7 +81,7 @@ function loadGroup() {
     fetch(API_TO_GROUPS)
         .then(res => {
             if (!res.ok) {
-                throw new Error("Network response was not ok");
+                throw new Error("Network response was not ok"); 
             }
             return res.json(); // Parse response as JSON
         })
@@ -102,7 +94,6 @@ function loadGroup() {
                     option.textContent = group.groupName;
                     groupIdSelect.appendChild(option);
                 });
-                // Initialize Bootstrap Select Picker after modifying options
                 $('.selectpicker').selectpicker('refresh');
             } else {
                 console.error("Element with ID 'groupId' not found.");
@@ -114,10 +105,10 @@ function loadGroup() {
 }
 function redirectToLoginPage() {
     if (!localStorage.getItem('token')) {
-        window.location.href = "page-login.html"; // Redirect to login page
-        return true; // Return true to indicate redirection happened
+        window.location.href = "page-login.html";
+        return true;
     }
-    return false; // Return false if token is found
+    return false;
 }
 window.addEventListener('DOMContentLoaded', redirectToLoginPage);
 loadGroup();

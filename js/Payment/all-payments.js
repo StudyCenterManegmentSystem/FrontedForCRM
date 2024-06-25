@@ -46,7 +46,6 @@ async function displayFormattedPayments() {
         const table = $('#payments1').DataTable({
             destroy: true,
             columns: [
-                { data: 'Id' },
                 { data: 'StudentId' },
                 { data: 'GroupId' },
                 { data: 'Paid' },
