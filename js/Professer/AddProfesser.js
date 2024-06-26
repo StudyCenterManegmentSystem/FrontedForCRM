@@ -1,15 +1,9 @@
 const APITOROOMS = "https://localhost:7177/api/fans/get-all-fans";
 let fanSelect = document.getElementById("fanIds");
 
-console.log(localStorage.getItem('token'));
-
 // Function to load fans
 function loadFans() {
-  fetch(APITOROOMS, {
-    headers: {
-      'Authorization': localStorage.getItem('token')
-    }
-  })
+  fetch(APITOROOMS, {})
     .then(res => {
       if (!res.ok) {
         throw new Error("Network response was not ok");
@@ -19,12 +13,13 @@ function loadFans() {
     .then(data => {
       fanSelect.innerHTML = "";
       data.forEach(fan => {
-        const option = document.createEleme nt("option");
+        const option = document.createElement("option"); // Corrected createElement
         option.value = fan.id;
         option.textContent = fan.fanName;
         console.log("option to rooms", option);
         fanSelect.appendChild(option);
       });
+      $(fanSelect).selectpicker('refresh'); // Initialize and refresh selectpicker
     })
     .catch(error => {
       console.error("Error loading fans:", error);
@@ -32,18 +27,12 @@ function loadFans() {
 }
 
 // Function to periodically clear local storage
-function clearLocalStoragePeriodically() {
-  setInterval(function() {
-    localStorage.clear(); // Clear local storage
-  }, 3 * 60 * 60 * 1000); // 3 hours interval
-}
-
 function redirectToLoginPage() {
   if (!localStorage.getItem('token')) {
     window.location.href = "page-login.html"; // Redirect to login page
     return true; // Return true to indicate redirection happened
   }
-  return false; 
+  return false;
 }
 
 // Function to add professor
@@ -73,7 +62,7 @@ async function addProfessor() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${TOKEN}` 
+        'Authorization': `Bearer ${TOKEN}`
       },
       body: JSON.stringify(professorData)
     });
@@ -114,6 +103,7 @@ async function addProfessor() {
   }
 }
 
-window.addEventListener('DOMContentLoaded', loadFans);
-window.addEventListener('DOMContentLoaded', clearLocalStoragePeriodically);
-window.addEventListener('DOMContentLoaded', redirectToLoginPage);
+window.addEventListener('DOMContentLoaded', () => {
+  loadFans();
+  redirectToLoginPage();
+});

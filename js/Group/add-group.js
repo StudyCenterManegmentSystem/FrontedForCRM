@@ -31,7 +31,7 @@ function loadFans() {
         console.error("Error loading fans:", error);
     });
 }
- x
+ 
 function loadRooms() {
     fetch(APITOROOMS, {
         method: "GET",
@@ -61,7 +61,6 @@ function loadRooms() {
     });
 }
 
-// Function to load teachers
 function loadTeachers() {
     fetch(API_TO_TEACHER, {
         method: "GET",
@@ -91,7 +90,6 @@ function loadTeachers() {
     });
 }
 
-// Event listener for form submission to create a group
 document.getElementById('addGroupForm').addEventListener('submit', function (event) {
     event.preventDefault();
     var selectedWeekdays = [];
@@ -124,8 +122,9 @@ document.getElementById('addGroupForm').addEventListener('submit', function (eve
         duration: document.getElementById('duration').value
     };
 
-    console.log(formData);
-    console.log(localStorage.getItem('token'));
+    console.log("Request Body:", JSON.stringify(formData));
+    console.log("Token:", localStorage.getItem('token'));
+
     fetch(API_TO_CREATE_GROUP, {
         method: 'POST',
         headers: {
@@ -136,7 +135,9 @@ document.getElementById('addGroupForm').addEventListener('submit', function (eve
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Error creating group: ' + response.status);
+            return response.text().then(text => { 
+                throw new Error('Error creating group: ' + response.status + " " + text);
+            });
         }
         return response.json();
     })
@@ -151,7 +152,6 @@ document.getElementById('addGroupForm').addEventListener('submit', function (eve
     });
 });
 
-// Function to redirect to login page if token is not found
 function redirectToLoginPage() {
     if (!localStorage.getItem('token')) {
         window.location.href = "page-login.html"; // Redirect to login page
@@ -160,10 +160,10 @@ function redirectToLoginPage() {
     return false; // Return false if token is found
 }
 
-// Event listener to redirect to login page if token is not found
 window.addEventListener('DOMContentLoaded', () => {
-    redirectToLoginPage();
-    loadFans();
-    loadRooms();
-    loadTeachers();
+    if (!redirectToLoginPage()) {
+        loadFans();
+        loadRooms();
+        loadTeachers();
+    }
 });

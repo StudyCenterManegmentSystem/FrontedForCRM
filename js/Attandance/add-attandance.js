@@ -20,7 +20,7 @@ function submitAttendance() {
     fetch("https://localhost:7177/api/attendances/create-attendance", {
         method: "POST",
         body: JSON.stringify(jsonData),
-        headers: { "Content-Type": "application/json" },k
+        headers: { "Content-Type": "application/json" },
     })
         .then((response) => {
             if (response.ok || response.status === 200 || response.status === 201) {

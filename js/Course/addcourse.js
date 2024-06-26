@@ -22,7 +22,7 @@ async function addCourse() {
 
         if (response.ok || response.status === 200 || response.status === 201) {
             const resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = "Kurs muvaffaqiyatli qo'shildi.";
+            resultDiv.innerHTML = "Course added successfully";
             resultDiv.style.color = 'green';
             resultDiv.style.display = 'block';
 
@@ -40,7 +40,7 @@ async function addCourse() {
     } catch (error) {
         console.error('Error adding course:', error);
         const resultDiv = document.getElementById("result");
-        resultDiv.innerHTML = "Kurs qo'shib bo'lmadi. Iltimos, qayta urunib ko'ring.";
+        resultDiv.innerHTML = "Could not add course. Please try again.";
         resultDiv.style.color = 'red';
         resultDiv.style.display = 'block';
     }
