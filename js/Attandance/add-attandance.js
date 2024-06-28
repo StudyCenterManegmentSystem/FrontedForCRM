@@ -1,5 +1,8 @@
-function submitAttendance() {
+document.addEventListener('DOMContentLoaded', (event) => {
+    $('.selectpicker').selectpicker('refresh');
+});
 
+function submitAttendance() {
     const talabaId = document.getElementById("studentId").value;
     const groupId = document.getElementById("groupId").value;
     const keldiKemadiValue = document.getElementById("keldiKemadi").value;
@@ -13,33 +16,54 @@ function submitAttendance() {
         groupId: groupId,
     };
 
+    console.log("Talaba ID:", talabaId);
+    console.log("Group ID:", groupId);
+
+    const token = localStorage.getItem('token');
+    console.log("Retrieved Token:", token);
+
+    if (!token) {
+        document.getElementById('errorDisplay').innerText = 'No token found. Please log in.';
+        return;
+    }
+
     if (!talabaId || !groupId || !keldiKemadiValue || !qachon) {
         document.getElementById('errorDisplay').innerText = 'Please fill in all fields.';
         return;
     }
+
     fetch("https://localhost:7177/api/attendances/create-attendance", {
         method: "POST",
         body: JSON.stringify(jsonData),
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+            "Content-Type": "application/json", 
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
     })
-        .then((response) => {
-            if (response.ok || response.status === 200 || response.status === 201) {
-                document.getElementById("result").textContent = "Attendance submitted successfully!";
-                document.getElementById("attendanceForm").reset();
+    .then((response) => {
+        console.log("Response Status:", response.status);
+        if (response.ok || response.status === 200 || response.status === 201) {
+            document.getElementById("result").textContent = "Attendance submitted successfully!";
+            document.getElementById("attendanceForm").reset();
 
-                setTimeout(() => {
-                    window.location.href = './all-attandance.html';
-                }, 1000);
-    
-            } else {
-                response.text().then((text) => {
-                    document.getElementById("errorDisplay").textContent = "Error: " + text;
-                });
-            }
-        })
-        .catch((error) => {
-            document.getElementById("errorDisplay").textContent = "Error: " + error;
-        });
+            setTimeout(() => {
+                window.location.href = './all-attendance.html';
+            }, 1000);
+
+        } else if (response.status === 401) {
+            document.getElementById("errorDisplay").textContent = "Unauthorized: Please check your credentials.";
+        } else if (response.status === 403) {
+            document.getElementById("errorDisplay").textContent = "Forbidden: You do not have the necessary permissions.";
+        } else {
+            response.text().then((text) => {
+                document.getElementById("errorDisplay").textContent = "Error: " + text;
+            });
+        }
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+        document.getElementById("errorDisplay").textContent = "Error: " + error.message;
+    });
 }
 
 const API_TO_STUDENTS = "https://localhost:7177/api/students/get-all-students";
@@ -65,7 +89,7 @@ function loadStudents() {
                 });
                 $('.selectpicker').selectpicker('refresh');
             } else {
-                console.error("Element with ID 'talabaId' not found.");
+                console.error("Element with ID 'studentId' not found.");
             }
         })
         .catch(error => {
@@ -77,7 +101,7 @@ loadStudents();
 const API_TO_GROUPS = "https://localhost:7177/api/groups/get-all-guruh";
 let groupIdSelect = document.getElementById("groupId");
 
-function loadGroup() {
+function loadGroups() {
     fetch(API_TO_GROUPS)
         .then(res => {
             if (!res.ok) {
@@ -103,12 +127,5 @@ function loadGroup() {
             console.log("Error loading groups: ", error);
         });
 }
-function redirectToLoginPage() {
-    if (!localStorage.getItem('token')) {
-        window.location.href = "page-login.html";
-        return true;
-    }
-    return false;
-}
-window.addEventListener('DOMContentLoaded', redirectToLoginPage);
-loadGroup();
+
+loadGroups();
