@@ -19,7 +19,7 @@ function loadFans() {
     .then(data => {
       fanSelect.innerHTML = "";
       data.forEach(fan => {
-        const option = document.createEleme nt("option");
+        const option = document.createElement("option");
         option.value = fan.id;
         option.textContent = fan.fanName;
         console.log("option to rooms", option);

@@ -55,12 +55,3 @@ async function add_department() {
         console.error('Error adding department:', error);        
     }
 }
-
-function redirectToLoginPage() {
-    if (!localStorage.getItem('token')) {
-        window.location.href = "page-login.html"; // Redirect to login page
-        return true; // Return true to indicate redirection happened
-    }
-    return false; // Return false if token is found
-}
-window.addEventListener('DOMContentLoaded', redirectToLoginPage);

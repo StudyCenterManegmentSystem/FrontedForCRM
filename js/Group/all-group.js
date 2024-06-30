@@ -46,26 +46,22 @@ $('.row').on('click', '.delete-btn', function (e) {
     deleteGroup(groupId);
 });
 
-// Function to populate HTML with group data
 function populateGroupHTML(data) {
     // Get the container element where group cards will be appended
     var container = $('.row');
-
-    // Iterate over the group data and create HTML for each group
     data.forEach(function (group) {
-        // Format start datetime
         var formattedStart = formatDateTime(group.start);
-
-        // Calculate student count
         var studentCount = group.students ? group.students.length : 0;
-
-        // Create HTML for group card
+        var teacherName = group.teacher ? `${group.teacher.firstName} ${group.teacher.lastName}` : 'No Teacher Assigned';
+        var groupName = group.groupName; // Assuming this is the property containing group name
+        var fanName = group.fan.fanName; // Assuming this is the property containing fan name
         var groupHTML = `
             <div class='col-xl-3 col-xxl-4 col-lg-4 col-md-6 col-sm-6 mt-3 ml-2'>
                 <div class='card'>
                     <!-- Populate card content with group data -->
                     <div class='card-body'>
-                        <h4>${group.fan.fanName}</h4>
+                        <h4>Group: ${groupName}</h4>
+                        <h5>Fan: ${fanName}</h5>
                         <ul class='list-group mb-3 list-group-flush'>
                             <li class='list-group-item px-0 border-top-0 d-flex justify-content-between'>
                                 <span class='mb-0 text-muted'>${formattedStart}</span>
@@ -76,9 +72,9 @@ function populateGroupHTML(data) {
                             </li>
                             <li class='list-group-item px-0 d-flex justify-content-between'>
                                 <span class='mb-0'>Professor :</span>
-                                <strong>${group.teacher.firstName} ${group.teacher.lastName}</strong>
+                                <strong>${teacherName}</strong>
                             </li>
-                           <li class='list-group-item px-0 d-flex justify-content-between'>
+                            <li class='list-group-item px-0 d-flex justify-content-between'>
                                 <span>
                                     <i class='text-primary mr-2'></i>Start
                                 </span>
@@ -110,6 +106,7 @@ function populateGroupHTML(data) {
         container.append(groupHTML);
     });
 }
+
 
 // Function to format datetime string as "Month Day, Year"
 function formatDateTime(datetimeString) {

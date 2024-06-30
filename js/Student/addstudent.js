@@ -1,103 +1,110 @@
-   const token = localStorage.getItem('token');
+const API_TO_GROUPS = "https://localhost:7177/api/groups/get-all-guruh";
+let groupIdSelect = document.getElementById("groupId");
 
-function loadGroups() {
-  fetch('https://localhost:7177/api/groups/get-all-guruh', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    },
-  })
-    .then(res => res.json())
-    .then(data => {
-      const groupSelect = document.getElementById("mySelect");
-      if (!groupSelect) {
-        console.error('Error: Group select element not found.');
-        return;
-      }
-      groupSelect.innerHTML = "";
-      data.forEach(group => {
-        const option = document.createElement("option");
-        option.value = group.id;
-        option.textContent = group.groupName;
-        groupSelect.appendChild(option);
-        console.log(option);
-      });
-    })
-    .catch(error => {
-      console.error('Error loading groups:', error);
-    });
-}
+// Function to load groups and populate groupIdSelect
+async function loadGroups() {
+    try {
+        const response = await fetch(API_TO_GROUPS, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('token')}`
+            }
+        });
 
-function addStudent() {
-  const token2 = localStorage.getItem('token');
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
 
-  if (token2 === null) {
-    window.location.href = 'page-login.html';
-    return;
-  }
-
-  const firstname = document.getElementById("firstname").value;
-  const lastname = document.getElementById("lastname").value;
-  const phonenumber = document.getElementById("mobilephone").value;
-
-  const groupSelect = document.getElementById("mySelect");
-  const selectedOptions = Array.from(groupSelect.selectedOptions).map(option => option.value);
-
-  if (selectedOptions.length === 0) {
-    alert("Please select at least one group.");
-    return;
-  }
-
-  const studentData = {
-    firstName: firstname,
-    lastName: lastname,
-    phoneNumber: phonenumber,
-    groupIds: selectedOptions
-  };
-
-  
-  fetch('https://localhost:7177/api/students/create-student', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token2}`
-    },
-    body: JSON.stringify(studentData)         
-  })
-   .then(response => {
-    console.log(JSON.stringify(studentData));
-    if (response.ok || response.status === 200 || response.status === 201) {
-        document.getElementById("errorDisplay").innerHTML = "";
-      document.getElementById("result").innerHTML = "Student added successfully";
-      document.getElementById("result").style.color = "green";  
-      document.getElementById("result").style.display = "block";
-      setTimeout(() => {
-        document.getElementById("result").style.display = "none";
-        wivndow.location.href = './all-students.html';
-      }, 3000);
-    } else if (response.status == 400 || response.status == 409) {
-      response.json().then(errorResponse => {
-        document.getElementById("errorDisplay").innerHTML = `Error: ${errorResponse.message}`;
-        document.getElementById("errorDisplay").style.color = "red";
-        document.getElementById("errorDisplay").style.display = "block";
-      });
+        const data = await response.json(); // Parse response as JSON
+        return data; // Return parsed data
+    } catch (error) {
+        console.error("Error loading groups: ", error);
+        throw error; // Rethrow error to handle it in caller function
     }
-  }).catch(error => {
-    console.error(error);
-    document.getElementById("errorDisplay").innerHTML = "An error occurred. Please try again later.";
-    document.getElementById("errorDisplay").style.color = "red";
-    document.getElementById("errorDisplay").style.display = "block";
-  });
 }
 
-function redirectToLoginPage() {
-  if (!localStorage.getItem('token')) {
-    window.location.href = "page-login.html";
-    return true; 
-  }
-  return false;
+// Function to populate groupIdSelect dropdown with loaded groups
+async function populateGroupOptions() {
+    try {
+        const allGroups = await loadGroups();
+
+        // Get groupIdSelect element after DOM is loaded
+        let groupIdSelect = document.getElementById("groupId");
+
+        if (!groupIdSelect) {
+            console.error("Element with ID 'groupId' not found.");
+            return;
+        }
+
+        // Clear existing options (if any)
+        groupIdSelect.innerHTML = "";
+
+        // Populate select with fetched group names
+        allGroups.forEach(group => {
+            const option = document.createElement("option");
+            option.value = group.id; // Use group ID as option value
+            option.textContent = group.groupName; // Display group name as option text
+            groupIdSelect.appendChild(option);
+        });
+
+        // Initialize Bootstrap Select Picker after modifying options
+        $(groupIdSelect).selectpicker('refresh');
+    } catch (error) {
+        console.error("Error populating group options: ", error);
+        document.getElementById('errorDisplay').innerText = 'Error loading groups.';
+    }
 }
 
-window.addEventListener('DOMContentLoaded', redirectToLoginPage);
-window.addEventListener('DOMContentLoaded', loadGroups);
+// Call populateGroupOptions to initially populate groupIdSelect after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    populateGroupOptions();
+});
+
+// Function to add a new student
+async function addStudent() {
+    try {
+        // Get input values
+        const firstName = document.getElementById('firstname').value;
+        const lastName = document.getElementById('lastname').value;
+        const phoneNumber = document.getElementById('mobilephone').value;
+        const selectedOptions = Array.from(document.getElementById('mySelect').selectedOptions);
+
+        // Extract selected group IDs
+        const groupIds = selectedOptions.map(option => option.value);
+
+        // Validate group selection
+        if (groupIds.length === 0) {
+            document.getElementById('errorDisplay').innerText = 'Please select at least one group.';
+            return;
+        }
+
+        // Prepare student data
+        const studentData = {
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+            groupIds: groupIds
+        };
+
+        // Send POST request to add student
+        const response = await fetch('https://localhost:7177/api/students/create-student', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(studentData)
+        });
+
+        if (response.ok) {
+            document.getElementById('result').innerText = 'Student added successfully!';
+            document.getElementById('errorDisplay').innerText = '';
+        } else {
+            const errorData = await response.json();
+            document.getElementById('errorDisplay').innerText = `Error: ${errorData.message}`;
+        }
+    } catch (error) {
+        document.getElementById('errorDisplay').innerText = `Error: ${error.message}`;
+    }
+}

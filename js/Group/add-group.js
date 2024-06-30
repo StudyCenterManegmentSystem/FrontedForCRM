@@ -31,7 +31,7 @@ function loadFans() {
         console.error("Error loading fans:", error);
     });
 }
- x
+
 function loadRooms() {
     fetch(APITOROOMS, {
         method: "GET",
@@ -61,7 +61,6 @@ function loadRooms() {
     });
 }
 
-// Function to load teachers
 function loadTeachers() {
     fetch(API_TO_TEACHER, {
         method: "GET",
@@ -91,7 +90,6 @@ function loadTeachers() {
     });
 }
 
-// Event listener for form submission to create a group
 document.getElementById('addGroupForm').addEventListener('submit', function (event) {
     event.preventDefault();
     var selectedWeekdays = [];
@@ -124,12 +122,10 @@ document.getElementById('addGroupForm').addEventListener('submit', function (eve
         duration: document.getElementById('duration').value
     };
 
-    console.log(formData);
-    console.log(localStorage.getItem('token'));
     fetch(API_TO_CREATE_GROUP, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json', 
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify(formData)
@@ -141,7 +137,6 @@ document.getElementById('addGroupForm').addEventListener('submit', function (eve
         return response.json();
     })
     .then(data => {
-        console.log('Success:', data);
         alert('Group added successfully!');
         window.location.href = './all-group.html';
     })
@@ -151,16 +146,14 @@ document.getElementById('addGroupForm').addEventListener('submit', function (eve
     });
 });
 
-// Function to redirect to login page if token is not found
 function redirectToLoginPage() {
     if (!localStorage.getItem('token')) {
-        window.location.href = "page-login.html"; // Redirect to login page
-        return true; // Return true to indicate redirection happened
+        window.location.href = "page-login.html";
+        return true;
     }
-    return false; // Return false if token is found
+    return false;
 }
 
-// Event listener to redirect to login page if token is not found
 window.addEventListener('DOMContentLoaded', () => {
     redirectToLoginPage();
     loadFans();
