@@ -57,6 +57,7 @@ function addpayment() {
                     console.error("Error parsing error response: ", e);
                     document.getElementById("errorDisplay").innerHTML = "Error processing server response.";
                 }
+                // xatolar bor
             }
         }
     };
