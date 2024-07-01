@@ -14,7 +14,7 @@ function loginUser() {
         password: password
     };
 
-    const API_TO_LOGIN = "https://localhost:7177/api/authentication/login";
+    const API_TO_LOGIN = "https://crm-edu-center.fn1.uz/api/authentication/login";
 
     fetch(API_TO_LOGIN, {
         method: 'POST',

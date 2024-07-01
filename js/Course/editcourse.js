@@ -3,6 +3,7 @@ function submitForm(event) {
 
     var fanId = document.getElementById('courseCode').value; 
     var fanName = document.getElementById('courseName').value;
+    
     var fanDescription = document.getElementById('courseDescription').value;
 
     var data = {
@@ -12,7 +13,7 @@ function submitForm(event) {
     };
 
     var xhr = new XMLHttpRequest();
-    xhr.open('PUT', 'https://localhost:7177/api/fans/update-fan', true);
+    xhr.open('PUT', 'https://crm-edu-center.fn1.uz/api/fans/update-fan', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     xhr.onload = function () {

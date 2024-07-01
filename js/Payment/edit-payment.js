@@ -13,7 +13,7 @@ function editPayment() {
         qanchaTolagan: qanchaTolagan,
         paymentType: paymentType
     };
-    fetch('https://localhost:7177/api/payments/update-payment', {
+    fetch('https://crm-edu-center.fn1.uz/api/payments/update-payment', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

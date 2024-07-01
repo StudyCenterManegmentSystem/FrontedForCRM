@@ -107,7 +107,7 @@ function loadGroups() {
             if (!res.ok) {
                 throw new Error("Network response was not ok"); 
             }
-            return res.json(); // Parse response as JSON
+            return res.json(); // Parse response as     
         })
         .then(data => {
             if (groupIdSelect) {

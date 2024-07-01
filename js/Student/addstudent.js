@@ -1,5 +1,5 @@
 function loadGroups() {
-  fetch('https://localhost:7177/api/groups/get-all-guruh', {
+  fetch('https://crm-edu-center.fn1.uz/api/groups/get-all-guruh', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ function addStudent() {
     gruopIds: selectedOptions // Ensure this matches the server's expected key
   };
 
-  fetch('https://localhost:7177/api/students/create-student', {
+  fetch('https://crm-edu-center.fn1.uz/api/students/create-student', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

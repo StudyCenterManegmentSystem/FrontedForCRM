@@ -1,4 +1,4 @@
-const apiUrl = 'https://localhost:7177/api/rooms/update';
+const apiUrl = 'https://crm-edu-center.fn1.uz/api/rooms/update';
 const editDepartmentForm = document.getElementById('editDepartmentForm');
 
 editDepartmentForm.addEventListener('submit', async function(event) {

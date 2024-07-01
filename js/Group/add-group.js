@@ -1,7 +1,7 @@
-const APITOFANS = "https://localhost:7177/api/fans/get-all-fans";
-const APITOROOMS = "https://localhost:7177/api/rooms/all-room";
-const API_TO_TEACHER = "https://localhost:7177/api/admins/all-teachers-with-fans";
-const API_TO_CREATE_GROUP = "https://localhost:7177/api/groups/create-guruh";
+const APITOFANS = "https://crm-edu-center.fn1.uz/api/fans/get-all-fans";
+const APITOROOMS = "https://crm-edu-center.fn1.uz/api/rooms/all-room";
+const API_TO_TEACHER = "https://crm-edu-center.fn1.uz/api/admins/all-teachers-with-fans";
+const API_TO_CREATE_GROUP = "https://crm-edu-center.fn1.uz/api/groups/create-guruh";
 
 function loadFans() {
     fetch(APITOFANS, {

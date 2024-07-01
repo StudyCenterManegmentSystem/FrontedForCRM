@@ -2,7 +2,7 @@
 function fetchGroupData() {
     // Make AJAX request
     $.ajax({
-        url: 'https://localhost:7177/api/groups/get-all-guruh',
+        url: 'https://crm-edu-center.fn1.uz/api/groups/get-all-guruh',
         type: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -19,7 +19,7 @@ function fetchGroupData() {
 function deleteGroup(groupId) {
     // Make AJAX request
     $.ajax({
-        url: `https://localhost:7177/api/groups/delete-guruh/${groupId}`,
+        url: `https://crm-edu-center.fn1.uz/api/groups/delete-guruh/${groupId}`,
         type: 'DELETE',
         dataType: 'json',
         headers: {

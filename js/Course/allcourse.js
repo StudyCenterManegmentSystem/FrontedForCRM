@@ -1,4 +1,4 @@
-const apiUrl = 'https://localhost:7177/api/fans/get-all-with-teachers';
+const apiUrl = 'https://crm-edu-center.fn1.uz/api/fans/get-all-with-teachers';
 
 async function fetchCourses() {
     try {
@@ -21,10 +21,14 @@ function renderCourses(courses) {
         row.innerHTML = `
             <td>${course.fanName}</td>
             <td>${getTeacherNames(course.teachers)}</td>
+            <td>
+                <button class="btn btn-sm btn-primary btn-edit" data-id="${course.id}">Edit</button>
+            </td>
         `;
         courseTableBody.appendChild(row);
     });
 }
+
 
 
 function getTeacherNames(teachers) {

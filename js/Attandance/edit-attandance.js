@@ -20,7 +20,7 @@ function editAttendance() {
         return;
     }
 
-    fetch('https://localhost:7177/api/attendances/update-attendace', {
+    fetch('https://crm-edu-center.fn1.uz/api/attendances/update-attendace', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

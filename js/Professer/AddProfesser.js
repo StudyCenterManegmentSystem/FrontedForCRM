@@ -1,4 +1,4 @@
-const APITOROOMS = "https://localhost:7177/api/fans/get-all-fans";
+const APITOROOMS = "https://crm-edu-center.fn1.uz/api/fans/get-all-fans";
 let fanSelect = document.getElementById("fanIds");
 
 // Function to load fans
@@ -58,7 +58,7 @@ async function addProfessor() {
   };
 
   try {
-    const response = await fetch('https://localhost:7177/api/admins/register-teacher', {
+    const response = await fetch('https://crm-edu-center.fn1.uz/api/admins/register-teacher', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -103,7 +103,5 @@ async function addProfessor() {
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  loadFans();
-  redirectToLoginPage();
-});
+window.addEventListener('DOMContentLoaded', redirectToLoginPage);
+window.addEventListener('DOMContentLoaded', loadFans);
