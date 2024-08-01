@@ -14,53 +14,7 @@
     <!-- Pick date -->
     <link rel="stylesheet" href="vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="vendor/pickadate/themes/default.date.css">
-    <style>
-        /* Override default select styles */
-        .selectpicker {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            background-color: #fff;
-            /* Add desired background color */
-        }
-
-        /* Adjust dropdown arrow position */
-        .selectpicker+.bootstrap-select>.dropdown-toggle {
-            padding-right: 30px;
-        }
-
-        /* Style dropdown arrow */
-        .selectpicker+.bootstrap-select>.dropdown-toggle::after {
-            content: none;
-            /* Remove default arrow */
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 5px 5px 0 5px;
-            border-color: #555 transparent transparent transparent;
-        }
-
-        /* Style dropdown menu */
-        .bootstrap-select .dropdown-menu {
-            border-radius: 5px;
-        }
-
-        /* Style dropdown items */
-        .bootstrap-select .dropdown-menu li a {
-            padding: 8px;
-        }
-
-        /* Hover effect on dropdown items */
-        .bootstrap-select .dropdown-menu li a:hover {
-            background-color: #f5f5f5;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
 </head>
 
 <body>
@@ -313,7 +267,7 @@
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label class="form-label">Fanlar</label>
-                                            <select class="form-control selectpicker" multiple id="fanIds"></select>
+                                            <select class="form-control selectpicker" data-live-search="true" multiple id="fanIds"></select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12">
@@ -383,6 +337,7 @@
     <script src="vendor/pickadate/picker.js"></script>
     <script src="vendor/pickadate/picker.time.js"></script>
     <script src="vendor/pickadate/picker.date.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
 
     <!-- Pickdate -->
     <script src="js/plugins-init/pickadate-init.js"></script>

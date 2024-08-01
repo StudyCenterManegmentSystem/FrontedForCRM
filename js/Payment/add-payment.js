@@ -1,7 +1,9 @@
 function addpayment() {
-    if (localStorage.getItem('token') == null) {
+    if (!localStorage.getItem('token')) {
         window.location.href = './page-login.html';
+        return;
     }
+
     var studentId = document.getElementById("talabaId").value;
     var groupId = document.getElementById("groupId").value;
     var qachonTolagan = document.getElementById("qachontolangan").value;
@@ -12,39 +14,50 @@ function addpayment() {
         document.getElementById('errorDisplay').innerText = 'Please fill in all fields.';
         return;
     }
-    
+
     var data = {
         "studentId": studentId,
         "groupId": groupId,
         "qachonTolagan": qachonTolagan,
-        "qanchaTolagan": parseInt(qanchaTolagan), 
-        "paymentType": parseInt(paymentType) 
+        "qanchaTolagan": parseInt(qanchaTolagan, 10),
+        "paymentType": parseInt(paymentType, 10)
     };
 
     var xhr = new XMLHttpRequest();
-    var url = 'https://localhost:7177/api/payments/create-payment';
+    var url = 'https://crm-edu-center.fn1.uz/api/payments/create-payment';
     xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/json", "Authorization", "Bearer " + localStorage.getItem('token'));
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token'));
+
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
-            if (xhr.status === 200 || xhr.status === 201) {
+            try {
                 var response = JSON.parse(xhr.responseText);
+            } catch (e) {
+                console.error("Error parsing JSON response: ", e);
+                document.getElementById("errorDisplay").innerText = "An error occurred while processing the response.";
+                return;
+            }
+
+            if (xhr.status === 200 || xhr.status === 201) {
                 console.log(response, data);
                 document.getElementById("errorDisplay").innerHTML = "";
                 document.getElementById("result").innerHTML = "Payment added successfully!";
+            } else if (xhr.status === 401) {
+                document.getElementById("errorDisplay").innerText = "Unauthorized. Please log in again.";
+                window.location.href = './page-login.html';
             } else {
-                var errorResponse = JSON.parse(xhr.responseText);
-                document.getElementById("errorDisplay").innerHTML = errorResponse.error;
+                document.getElementById("errorDisplay").innerHTML = response.error || "An error occurred.";
             }
         }
     };
     xhr.send(JSON.stringify(data));
 }
 
-const API_TO_STUDENTS = "https://localhost:7177/api/students/get-all-students";
-let studentIdSelect = document.getElementById("talabaId");
-
 function loadStudents() {
+    const API_TO_STUDENTS = "https://crm-edu-center.fn1.uz/api/students/get-all-students";
+    let studentIdSelect = document.getElementById("talabaId");
+
     fetch(API_TO_STUDENTS, {
         method: "GET",
         headers: {
@@ -52,38 +65,35 @@ function loadStudents() {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
     })
-        .then(res => {
-            if (!res.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return res.json();
-        })
-        .then(data => {
-            if (studentIdSelect) { // Ensure studentIdSelect exists before accessing it
-                studentIdSelect.innerHTML = "";
-                data.forEach(student => {
-                    const option = document.createElement("option");
-                    option.value = student.id;
-                    option.textContent = student.lastName + " " + student.firstName;
-                    console.log(option);
-                    studentIdSelect.appendChild(option);
-                });
-                // Refresh Bootstrap Select Picker after modifying options
-                $('.selectpicker').selectpicker('refresh');
-            } else {
-                console.error("Element with ID 'talabaId' not found.");
-            }
-        })
-        .catch(error => {
-            console.log("Error loading students: ", error);
-        });
+    .then(res => {
+        if (!res.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (studentIdSelect) {
+            studentIdSelect.innerHTML = "";
+            data.forEach(student => {
+                const option = document.createElement("option");
+                option.value = student.id;
+                option.textContent = student.lastName + " " + student.firstName;
+                studentIdSelect.appendChild(option);
+            });
+            $('.selectpicker').selectpicker('refresh');
+        } else {
+            console.error("Element with ID 'talabaId' not found.");
+        }
+    })
+    .catch(error => {
+        console.log("Error loading students: ", error);
+    });
 }
-loadStudents();
-
-const API_TO_GROUPS = "https://localhost:7177/api/groups/get-all-guruh";
-let groupIdSelect = document.getElementById("groupId");
 
 function loadGroup() {
+    const API_TO_GROUPS = "https://crm-edu-center.fn1.uz/api/groups/get-all-guruh";
+    let groupIdSelect = document.getElementById("groupId");
+
     fetch(API_TO_GROUPS, {
         method: "GET",
         headers: {
@@ -91,39 +101,41 @@ function loadGroup() {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
     })
-        .then(res => {
-            if (!res.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return res.json(); // Parse response as JSON
-        })
-        .then(data => {
-            if (groupIdSelect) {
-                groupIdSelect.innerHTML = "";
-                data.forEach(group => {
-                    const option = document.createElement("option");
-                    option.value = group.id;
-                    option.textContent = group.groupName;
-                    groupIdSelect.appendChild(option);
-                });
-                // Initialize Bootstrap Select Picker after modifying options
-                $('.selectpicker').selectpicker('refresh');
-            } else {
-                console.error("Element with ID 'groupId' not found.");
-            }
-        })
-        .catch(error => {
-            console.log("Error loading groups: ", error);
-        });
+    .then(res => {
+        if (!res.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (groupIdSelect) {
+            groupIdSelect.innerHTML = "";
+            data.forEach(group => {
+                const option = document.createElement("option");
+                option.value = group.id;
+                option.textContent = group.groupName;
+                groupIdSelect.appendChild(option);
+            });
+            $('.selectpicker').selectpicker('refresh');
+        } else {
+            console.error("Element with ID 'groupId' not found.");
+        }
+    })
+    .catch(error => {
+        console.log("Error loading groups: ", error);
+    });
 }
-
-loadGroup();
 
 function redirectToLoginPage() {
     if (!localStorage.getItem('token')) {
-        window.location.href = "page-login.html"; 
-        return true; 
+        window.location.href = "page-login.html";
+        return true;
     }
-    return false; 
+    return false;
 }
-window.addEventListener('DOMContentLoaded', redirectToLoginPage);
+
+window.addEventListener('DOMContentLoaded', () => {
+    redirectToLoginPage();
+    loadStudents();
+    loadGroup();
+});

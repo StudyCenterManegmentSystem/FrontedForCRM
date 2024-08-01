@@ -1,7 +1,5 @@
-const API_TO_GROUPS = "https://localhost:7177/api/groups/get-all-guruh";
-let groupIdSelect = document.getElementById("groupId");
+const API_TO_GROUPS = "https://crm-edu-center.fn1.uz/api/groups/get-all-guruh";
 
-// Function to load groups and populate groupIdSelect
 async function loadGroups() {
     try {
         const response = await fetch(API_TO_GROUPS, {
@@ -16,79 +14,68 @@ async function loadGroups() {
             throw new Error("Network response was not ok");
         }
 
-        const data = await response.json(); // Parse response as JSON
-        return data; // Return parsed data
+        return await response.json();
     } catch (error) {
         console.error("Error loading groups: ", error);
-        throw error; // Rethrow error to handle it in caller function
+        throw error;
     }
 }
 
-// Function to populate groupIdSelect dropdown with loaded groups
 async function populateGroupOptions() {
     try {
         const allGroups = await loadGroups();
-
-        // Get groupIdSelect element after DOM is loaded
-        let groupIdSelect = document.getElementById("groupId");
+        const groupIdSelect = document.getElementById("groupId");
 
         if (!groupIdSelect) {
             console.error("Element with ID 'groupId' not found.");
             return;
         }
 
-        // Clear existing options (if any)
         groupIdSelect.innerHTML = "";
 
-        // Populate select with fetched group names
         allGroups.forEach(group => {
             const option = document.createElement("option");
-            option.value = group.id; // Use group ID as option value
-            option.textContent = group.groupName; // Display group name as option text
+            option.value = group.id;
+            option.textContent = group.groupName;
             groupIdSelect.appendChild(option);
         });
 
-        // Initialize Bootstrap Select Picker after modifying options
-        $(groupIdSelect).selectpicker('refresh');
     } catch (error) {
         console.error("Error populating group options: ", error);
         document.getElementById('errorDisplay').innerText = 'Error loading groups.';
     }
 }
 
-// Call populateGroupOptions to initially populate groupIdSelect after DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    populateGroupOptions();
-});
-
-// Function to add a new student
 async function addStudent() {
     try {
-        // Get input values
         const firstName = document.getElementById('firstname').value;
         const lastName = document.getElementById('lastname').value;
         const phoneNumber = document.getElementById('mobilephone').value;
-        const selectedOptions = Array.from(document.getElementById('mySelect').selectedOptions);
+        const groupIdSelect = document.getElementById('groupId');
 
-        // Extract selected group IDs
+        if (!groupIdSelect) {
+            console.error("Element with ID 'groupId' not found.");
+            return;
+        }
+
+        const selectedOptions = Array.from(groupIdSelect.selectedOptions);
         const groupIds = selectedOptions.map(option => option.value);
 
-        // Validate group selection
         if (groupIds.length === 0) {
             document.getElementById('errorDisplay').innerText = 'Please select at least one group.';
             return;
         }
 
-        // Prepare student data
         const studentData = {
             firstName: firstName,
             lastName: lastName,
             phoneNumber: phoneNumber,
-            groupIds: groupIds
+            gruopIds: groupIds
         };
 
-        // Send POST request to add student
-        const response = await fetch('https://localhost:7177/api/students/create-student', {
+        console.log("Student Data: ", studentData);
+
+        const response = await fetch('https://crm-edu-center.fn1.uz/api/students/create-student', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -97,14 +84,26 @@ async function addStudent() {
             body: JSON.stringify(studentData)
         });
 
+        const responseData = await response.json();
+        console.log("Response Data: ", responseData);
+
         if (response.ok) {
             document.getElementById('result').innerText = 'Student added successfully!';
-            document.getElementById('errorDisplay').innerText = '';
+            setTimeout(() => {
+                window.location.href = 'all-students.html';
+                document.getElementById('errorDisplay').innerText = '';
+            }, 2000);
         } else {
-            const errorData = await response.json();
-            document.getElementById('errorDisplay').innerText = `Error: ${errorData.message}`;
+            console.error("Error Data: ", responseData);
+            document.getElementById('errorDisplay').innerText = `Error: ${responseData.message}`;
         }
     } catch (error) {
+        console.error("Error adding student: ", error);
         document.getElementById('errorDisplay').innerText = `Error: ${error.message}`;
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    populateGroupOptions();
+    document.getElementById('addStudentButton').addEventListener('click', addStudent);
+});

@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // Make an AJAX request to the API
     $.ajax({
-        url: 'https://localhost:7177/api/rooms/all-room',
+        url: 'https://crm-edu-center.fn1.uz/api/rooms/all-room',
         type: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -26,7 +26,7 @@ $(document).ready(function () {
 
         var roomId = $deleteButton.data('id');
         $.ajax({
-            url: `https://localhost:7177/api/rooms/delete/${roomId}`,
+            url: `https://crm-edu-center.fn1.uz/api/rooms/delete/${roomId}`,
             type: 'DELETE',
             success: function (response) {
                 // Remove the row from the table

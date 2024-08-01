@@ -1,49 +1,50 @@
-const APITOROOMS = "https://localhost:7177/api/fans/get-all-fans";
+const APITOROOMS = "https://crm-edu-center.fn1.uz/api/fans/get-all-fans";
 let fanSelect = document.getElementById("fanIds");
-
-console.log(localStorage.getItem('token'));
 
 // Function to load fans
 function loadFans() {
+  const TOKEN = localStorage.getItem('token');
+
   fetch(APITOROOMS, {
     headers: {
-      'Authorization': localStorage.getItem('token')
+      'Authorization': `Bearer ${TOKEN}`
     }
   })
     .then(res => {
+      if (res.status === 401) {
+        // Handle 401 Unauthorized error
+        redirectToLoginPage();
+        return;
+      }
+
       if (!res.ok) {
         throw new Error("Network response was not ok");
       }
+
       return res.json();
     })
     .then(data => {
-      fanSelect.innerHTML = "";
-      data.forEach(fan => {
-        const option = document.createElement("option");
-        option.value = fan.id;
-        option.textContent = fan.fanName;
-        console.log("option to rooms", option);
-        fanSelect.appendChild(option);
-      });
+      if (data) {
+        fanSelect.innerHTML = "";
+        data.forEach(fan => {
+          const option = document.createElement("option");
+          option.value = fan.id;
+          option.textContent = fan.fanName;
+          fanSelect.appendChild(option);
+        });
+        $(fanSelect).selectpicker('refresh');
+      }
     })
     .catch(error => {
       console.error("Error loading fans:", error);
     });
 }
 
-// Function to periodically clear local storage
-function clearLocalStoragePeriodically() {
-  setInterval(function() {
-    localStorage.clear(); // Clear local storage
-  }, 3 * 60 * 60 * 1000); // 3 hours interval
-}
-
+// Function to redirect to login page if token is missing
 function redirectToLoginPage() {
   if (!localStorage.getItem('token')) {
-    window.location.href = "page-login.html"; // Redirect to login page
-    return true; // Return true to indicate redirection happened
+    window.location.href = "page-login.html";
   }
-  return false; 
 }
 
 // Function to add professor
@@ -54,10 +55,10 @@ async function addProfessor() {
   const password = document.getElementById("password").value;
   const confirmPassword = document.getElementById("confirmPassword").value;
   const fanIdsSelect = document.getElementById("fanIds");
-  const selectedFanIds = Array.from(fanIdsSelect.selectedOptions)
-    .map(option => option.value);
+  const selectedFanIds = Array.from(fanIdsSelect.selectedOptions).map(option => option.value);
 
   const TOKEN = localStorage.getItem('token');
+
 
   const professorData = {
     firstname: firstname,
@@ -69,16 +70,22 @@ async function addProfessor() {
   };
 
   try {
-    const response = await fetch('https://localhost:7177/api/admins/register-teacher', {
+    const response = await fetch('https://crm-edu-center.fn1.uz/api/admins/register-teacher', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${TOKEN}` 
+        'Authorization': `Bearer ${TOKEN}` // Ensure this is correct
       },
       body: JSON.stringify(professorData)
     });
 
-    if (response.ok || response.status === 200 || response.status === 201) {
+    if (response.status === 401) {
+      console.error("Unauthorized request. Token might be invalid or expired.");
+      redirectToLoginPage();
+      return;
+    }
+
+    if (response.ok || response.status === 201) {
       const resultDiv = document.getElementById("result");
       resultDiv.innerHTML = "Professor added successfully";
       resultDiv.style.color = 'green';
@@ -91,29 +98,16 @@ async function addProfessor() {
       }, 2000);
     } else {
       const resultDiv = document.getElementById("errorDisplay");
-      switch (response.status) {
-        case 401:
-          resultDiv.innerHTML = "Unauthorized access. Please login again.";
-          throw new Error("Unauthorized access. Please login again.");
-        case 400:
-          resultDiv.innerHTML = "Professor data is invalid. Please check and try again.";
-          break;
-        case 500:
-          resultDiv.innerHTML = "Server error occurred. Please try again later.";
-          break;
-        default:
-          const errorText = await response.text();
-          console.error(`Error: ${errorText}`);
-          resultDiv.innerText = `Error: ${errorText}`;
-      }
+      const errorText = await response.text();
+      console.error(`Error: ${errorText}`);
+      resultDiv.innerText = `Error: ${errorText}`;
       resultDiv.style.color = 'red';
       resultDiv.style.display = 'block';
     }
   } catch (error) {
-    console.error(error);
+    console.error("An error occurred:", error);
   }
 }
 
-window.addEventListener('DOMContentLoaded', loadFans);
-window.addEventListener('DOMContentLoaded', clearLocalStoragePeriodically);
 window.addEventListener('DOMContentLoaded', redirectToLoginPage);
+window.addEventListener('DOMContentLoaded', loadFans);

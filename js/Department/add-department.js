@@ -10,7 +10,7 @@ async function add_department() {
     }
 
     try {
-        const response = await fetch('https://localhost:7177/api/rooms/create-room', {
+        const response = await fetch('https://crm-edu-center.fn1.uz/api/rooms/create-room', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

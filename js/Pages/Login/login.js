@@ -14,7 +14,7 @@ function loginUser() {
         password: password
     };
 
-    const API_TO_LOGIN = "https://localhost:7177/api/authentication/login";
+    const API_TO_LOGIN = "https://crm-edu-center.fn1.uz/api/authentication/login";
 
     fetch(API_TO_LOGIN, {
         method: 'POST',
@@ -44,4 +44,17 @@ function loginUser() {
         console.error('There was a problem:', error);
         errorDisplay.innerHTML = "Login failed";
     });
+}
+function togglePassword() {
+    var passwordField = document.getElementById("password");
+    var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        togglePasswordIcon.classList.remove("fa-eye");
+        togglePasswordIcon.classList.add("fa-eye-slash");
+    } else {
+        passwordField.type = "password";
+        togglePasswordIcon.classList.remove("fa-eye-slash");
+        togglePasswordIcon.classList.add("fa-eye");
+    }
 }

@@ -1,10 +1,15 @@
 function submitAttendance() {
-
     const talabaId = document.getElementById("studentId").value;
     const groupId = document.getElementById("groupId").value;
     const keldiKemadiValue = document.getElementById("keldiKemadi").value;
     const keldiKemadi = keldiKemadiValue === "true"; // Convert string to Boolean
     const qachon = document.getElementById("qachon").value;
+
+    // Basic validation
+    if (!talabaId || !groupId || !keldiKemadiValue || !qachon) {
+        document.getElementById('errorDisplay').innerText = 'Please fill in all fields.';
+        return;
+    }
 
     const jsonData = {
         talabaId: talabaId,
@@ -13,24 +18,22 @@ function submitAttendance() {
         groupId: groupId,
     };
 
-    if (!talabaId || !groupId || !keldiKemadiValue || !qachon) {
-        document.getElementById('errorDisplay').innerText = 'Please fill in all fields.';
-        return;
-    }
-    fetch("https://localhost:7177/api/attendances/create-attendance", {
+    fetch("https://crm-edu-center.fn1.uz/api/attendances/create-attendance", {
         method: "POST",
         body: JSON.stringify(jsonData),
-        headers: { "Content-Type": "application/json" },k
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
     })
         .then((response) => {
-            if (response.ok || response.status === 200 || response.status === 201) {
+            if (response.ok) {
                 document.getElementById("result").textContent = "Attendance submitted successfully!";
                 document.getElementById("attendanceForm").reset();
 
                 setTimeout(() => {
                     window.location.href = './all-attandance.html';
                 }, 1000);
-    
             } else {
                 response.text().then((text) => {
                     document.getElementById("errorDisplay").textContent = "Error: " + text;
@@ -42,7 +45,7 @@ function submitAttendance() {
         });
 }
 
-const API_TO_STUDENTS = "https://localhost:7177/api/students/get-all-students";
+const API_TO_STUDENTS = "https://crm-edu-center.fn1.uz/api/students/get-all-students";
 let studentIdSelect = document.getElementById("studentId");
 
 function loadStudents() {
@@ -60,12 +63,12 @@ function loadStudents() {
                     const option = document.createElement("option");
                     option.value = student.id;
                     option.textContent = student.lastName + " " + student.firstName;
-                    console.log(option);
                     studentIdSelect.appendChild(option);
                 });
+                // Refresh selectpicker after populating the options
                 $('.selectpicker').selectpicker('refresh');
             } else {
-                console.error("Element with ID 'talabaId' not found.");
+                console.error("Element with ID 'studentId' not found.");
             }
         })
         .catch(error => {
@@ -74,7 +77,7 @@ function loadStudents() {
 }
 loadStudents();
 
-const API_TO_GROUPS = "https://localhost:7177/api/groups/get-all-guruh";
+const API_TO_GROUPS = "https://crm-edu-center.fn1.uz/api/groups/get-all-guruh";
 let groupIdSelect = document.getElementById("groupId");
 
 function loadGroup() {
@@ -94,6 +97,7 @@ function loadGroup() {
                     option.textContent = group.groupName;
                     groupIdSelect.appendChild(option);
                 });
+                // Refresh selectpicker after populating the options
                 $('.selectpicker').selectpicker('refresh');
             } else {
                 console.error("Element with ID 'groupId' not found.");
@@ -103,6 +107,7 @@ function loadGroup() {
             console.log("Error loading groups: ", error);
         });
 }
+
 function redirectToLoginPage() {
     if (!localStorage.getItem('token')) {
         window.location.href = "page-login.html";
@@ -110,5 +115,8 @@ function redirectToLoginPage() {
     }
     return false;
 }
-window.addEventListener('DOMContentLoaded', redirectToLoginPage);
-loadGroup();
+window.addEventListener('DOMContentLoaded', () => {
+    redirectToLoginPage();
+    loadGroup();
+});
+        

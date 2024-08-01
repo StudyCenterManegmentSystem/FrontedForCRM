@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="vendor/pickadate/themes/default.date.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
 
 </head>
 
@@ -203,10 +204,8 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <select id="studentId" class="form-control">
-                                                    <!-- Student IDs will be populated dynamically here -->
-                                                </select>
-                                            </div>
+                                                <select id="studentId" class="form-control selectpicker" data-live-search="true"></select>
+                                            </div>  
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                             <div class="form-group">
@@ -223,7 +222,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12">
-                                            <div class="form-group">
+                                            <div class="form-group">    
                                                 <label class="form-label">When</label>
                                                 <input type="datetime-local" id="qachon" class="form-control">
                                             </div>
@@ -258,6 +257,7 @@
     <script src="vendor/svganimation/vivus.min.js"></script>
     <script src="vendor/svganimation/svg.animation.js"></script>
     <script src="js/styleSwitcher.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
 
     <script src="vendor/pickadate/picker.js"></script>
     <script src="vendor/pickadate/picker.time.js"></script>

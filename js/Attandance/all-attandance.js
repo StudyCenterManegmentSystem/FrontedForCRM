@@ -17,7 +17,7 @@ function formatDateTime(dateTime) {
 
 function fetchAttendanceData() {
     $.ajax({
-        url: 'https://localhost:7177/api/attendances/getall-attendace',
+        url: 'https://crm-edu-center.fn1.uz/api/attendances/getall-attendace',
         type: 'GET',
         dataType: 'json',
         success: function(data) {

@@ -1,4 +1,4 @@
-const apiUrl = 'https://localhost:7177/api/fans/get-all-with-teachers';
+const apiUrl = 'https://crm-edu-center.fn1.uz/api/fans/get-all-with-teachers';
 
 async function fetchCourses() {
     try {
@@ -22,11 +22,12 @@ function renderCourses(courses) {
             <td>${course.fanName}</td>
             <td>${getTeacherNames(course.teachers)}</td>
         `;
-        courseTableBody.appendChild(row);
+        courseTableBody.appendChild(row); 
+        
     });
 }
 
-
+     
 function getTeacherNames(teachers) {
     return teachers.map(teacher => `${teacher.firstName} ${teacher.lastName}`).join(', ');
 }
@@ -38,7 +39,7 @@ async function init() {
 
         renderCourses(courses);
     } catch (error) {
-        console.error('Error initializing application:', error);
+        console.error('Error initializing application:', error);    
     }
 }
 init();

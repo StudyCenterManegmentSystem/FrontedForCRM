@@ -8,7 +8,7 @@ async function deleteProfessor() {
     }
 
     try {
-        const response = await fetch('https://localhost:7177/api/admins/delete-teacher-account', {
+        const response = await fetch('https://crm-edu-center.fn1.uz/api/admins/delete-teacher-account', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

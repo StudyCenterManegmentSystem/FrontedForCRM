@@ -5,7 +5,7 @@ function changePassword() {
         newPassword: document.getElementById('newPassword').value
     };
 
-    fetch('https://localhost:7177/api/teachers/change-teacher-password',{
+    fetch('https://crm-edu-center.fn1.uz/api/teachers/change-teacher-password',{
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',

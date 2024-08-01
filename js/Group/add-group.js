@@ -1,7 +1,7 @@
-const APITOFANS = "https://localhost:7177/api/fans/get-all-fans";
-const APITOROOMS = "https://localhost:7177/api/rooms/all-room";
-const API_TO_TEACHER = "https://localhost:7177/api/admins/all-teachers-with-fans";
-const API_TO_CREATE_GROUP = "https://localhost:7177/api/groups/create-guruh";
+const APITOFANS = "https://crm-edu-center.fn1.uz/api/fans/get-all-fans";
+const APITOROOMS = "https://crm-edu-center.fn1.uz/api/rooms/all-room";
+const API_TO_TEACHER = "https://crm-edu-center.fn1.uz/api/admins/all-teachers-with-fans";
+const API_TO_CREATE_GROUP = "https://crm-edu-center.fn1.uz/api/groups/create-guruh";
 
 function loadFans() {
     fetch(APITOFANS, {
@@ -19,7 +19,7 @@ function loadFans() {
     })
     .then(data => {
         const fanSelect = document.getElementById("fanId");
-        fanSelect.innerHTML = ""; // Clear the select options before populating
+        fanSelect.innerHTML = "";
         data.forEach(fan => {
             const option = document.createElement("option");
             option.value = fan.id;
@@ -92,6 +92,7 @@ function loadTeachers() {
 
 document.getElementById('addGroupForm').addEventListener('submit', function (event) {
     event.preventDefault();
+
     var selectedWeekdays = [];
     var weekdaysMap = {
         'Monday': 1,
@@ -110,16 +111,31 @@ document.getElementById('addGroupForm').addEventListener('submit', function (eve
         }
     });
 
+    // Validate form inputs
+    var groupName = document.getElementById('groupName').value.trim();
+    var roomId = document.getElementById('roomId').value;
+    var fanId = document.getElementById('fanId').value;
+    var teacherId = document.getElementById('teacherId').value;
+    var start = document.getElementById('start').value;
+    var end = document.getElementById('end').value;
+    var price = parseFloat(document.getElementById('price').value);
+    var duration = document.getElementById('duration').value.trim();
+
+    if (!groupName || !roomId || !fanId || !teacherId || !start || !end || isNaN(price) || !duration) {
+        alert('Please fill in all fields correctly.');
+        return;
+    }
+
     var formData = {
-        groupName: document.getElementById('groupName').value,
-        roomId: document.getElementById('roomId').value,
-        fanId: document.getElementById('fanId').value,
-        teacherId: document.getElementById('teacherId').value,
+        groupName,
+        roomId,
+        fanId,
+        teacherId,
         weekdays: selectedWeekdays,
-        start: document.getElementById('start').value,
-        end: document.getElementById('end').value,
-        price: document.getElementById('price').value,
-        duration: document.getElementById('duration').value
+        start,
+        end,
+        price,
+        duration
     };
 
     fetch(API_TO_CREATE_GROUP, {
@@ -132,7 +148,9 @@ document.getElementById('addGroupForm').addEventListener('submit', function (eve
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Error creating group: ' + response.status);
+            return response.json().then(errorData => {
+                throw new Error(errorData.message || 'Error creating group.');
+            });
         }
         return response.json();
     })
@@ -140,9 +158,9 @@ document.getElementById('addGroupForm').addEventListener('submit', function (eve
         alert('Group added successfully!');
         window.location.href = './all-group.html';
     })
-    .catch((error) => {
+    .catch(error => {
         console.error('Error:', error);
-        alert('Error adding group. Please try again later.');
+        alert('Error adding group: ' + error.message);
     });
 });
 

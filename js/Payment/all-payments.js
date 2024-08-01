@@ -1,6 +1,6 @@
 async function fetchFormattedPayments() {
     try {
-        const response = await fetch('https://localhost:7177/api/payments/get-all-payments', {
+        const response = await fetch('https://crm-edu-center.fn1.uz/api/payments/get-all-payments', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

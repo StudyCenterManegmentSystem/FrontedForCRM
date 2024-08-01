@@ -6,7 +6,7 @@ $(document).ready(function() {
     }
     $('#example3').DataTable({
         "ajax": {
-            "url": "https://localhost:7177/api/students/get-all-students",
+            "url": "https://crm-edu-center.fn1.uz/api/students/get-all-students",
             "headers": {
                 "Authorization": `Bearer ${TOKEN}`
             },
@@ -28,7 +28,7 @@ $(document).ready(function() {
         e.preventDefault();
         var studentId = $(this).data('id');
         $.ajax({
-            url: `https://localhost:7177/api/students/delete-student/${studentId}`,
+            url: `https://crm-edu-center.fn1.uz/api/students/delete-student/${studentId}`,
             type: 'DELETE',
             headers: {
                 "Authorization": `Bearer ${TOKEN}`
